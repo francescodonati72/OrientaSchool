@@ -40,7 +40,7 @@ export function ParameterBarChart({ labels, series1, series2, label1, label2, ma
           {/* Y-axis */}
           <div className="flex-shrink-0 w-10" style={{ paddingTop: numberHeight }}>
             <div className="flex flex-col justify-between" style={{ height: chartHeight }}>
-              {[10, 7.5, 5, 2.5, 0].map((v) => (
+              {[10, 8, 6, 4, 2, 0].map((v) => (
                 <div key={v} className="text-[10px] text-slate-400 text-right pr-1 -mb-1.5">
                   {v}
                 </div>
