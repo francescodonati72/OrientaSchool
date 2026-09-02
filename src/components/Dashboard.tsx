@@ -348,6 +348,9 @@ export function Dashboard({ analysisId, onBack, onOpenSettings }: DashboardProps
             )}
           </>
         )}
+        <div className="flex justify-center mt-6 mb-4">
+          <WhatsAppButton />
+        </div>
       </main>
     </div>
   );
