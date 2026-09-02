@@ -25,7 +25,7 @@ function gradeBadgeClass(grade: number | null | undefined): string {
 
 function totalColorClass(total: number): string {
   if (total <= 0) return 'text-slate-400';
-  const maxPossible = 10 * 17; // 170 max with 17 params
+  const maxPossible = 10 * 17;
   const ratio = total / maxPossible;
   if (ratio < 0.4) return 'text-error-600';
   if (ratio < 0.6) return 'text-amber-600';
@@ -41,7 +41,6 @@ export function EvaluationMatrix({
 }: EvaluationMatrixProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Prevent body scroll when scrolling horizontally inside the matrix
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
@@ -94,7 +93,7 @@ export function EvaluationMatrix({
   return (
     <div className="overflow-x-auto" ref={scrollRef}>
       <div className="inline-block min-w-full">
-        {/* Header row: Parameter label + school columns */}
+        {/* Header row */}
         <div className="flex border-b-2 border-slate-200 sticky top-0 z-10 bg-white">
           <div className="w-64 flex-shrink-0 px-4 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
             Parametro
@@ -136,43 +135,24 @@ export function EvaluationMatrix({
                   className={`w-72 flex-shrink-0 px-4 py-3 border-l border-slate-200 ${gradeColorClass(grade)}`}
                 >
                   {/* Grade input */}
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="flex items-center gap-1">
-                      <button
-                        type="button"
-                        onClick={() => onGradeChange(school.id, param.id, Math.max(1, (grade ?? 1) - 1))}
-                        className="h-7 w-7 rounded-lg border border-slate-200 bg-white text-slate-500 hover:bg-slate-100 transition-colors flex items-center justify-center text-sm font-medium"
-                      >
-                        −
-                      </button>
-                      <div className={`h-7 w-10 rounded-lg flex items-center justify-center text-sm font-bold ${gradeBadgeClass(grade)}`}>
-                        {grade ?? '–'}
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => onGradeChange(school.id, param.id, Math.min(10, (grade ?? 0) + 1))}
-                        className="h-7 w-7 rounded-lg border border-slate-200 bg-white text-slate-500 hover:bg-slate-100 transition-colors flex items-center justify-center text-sm font-medium"
-                      >
-                        +
-                      </button>
+                  <div className="flex items-center gap-1 mb-2">
+                    <button
+                      type="button"
+                      onClick={() => onGradeChange(school.id, param.id, Math.max(1, (grade ?? 1) - 1))}
+                      className="h-7 w-7 rounded-lg border border-slate-200 bg-white text-slate-500 hover:bg-slate-100 transition-colors flex items-center justify-center text-sm font-medium"
+                    >
+                      −
+                    </button>
+                    <div className={`h-7 w-10 rounded-lg flex items-center justify-center text-sm font-bold ${gradeBadgeClass(grade)}`}>
+                      {grade ?? '–'}
                     </div>
-                    <input
-                      type="number"
-                      min={1}
-                      max={10}
-                      value={grade ?? ''}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        if (val === '') {
-                          onGradeChange(school.id, param.id, null);
-                        } else {
-                          const n = parseInt(val, 10);
-                          if (!isNaN(n)) onGradeChange(school.id, param.id, Math.max(1, Math.min(10, n)));
-                        }
-                      }}
-                      className="w-12 h-7 rounded-lg border border-slate-200 bg-white text-center text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-300 focus:border-brand-400"
-                      placeholder="–"
-                    />
+                    <button
+                      type="button"
+                      onClick={() => onGradeChange(school.id, param.id, Math.min(10, (grade ?? 0) + 1))}
+                      className="h-7 w-7 rounded-lg border border-slate-200 bg-white text-slate-500 hover:bg-slate-100 transition-colors flex items-center justify-center text-sm font-medium"
+                    >
+                      +
+                    </button>
                   </div>
                   {/* Note input */}
                   <input
