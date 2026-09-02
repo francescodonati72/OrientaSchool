@@ -61,7 +61,7 @@ export function ParameterBarChart({ labels, series1, series2, label1, label2, ma
                 {/* Bar area */}
                 <div className="flex items-end justify-center gap-1.5" style={{ height: chartHeight }}>
                   {/* Bar 1 */}
-                  <div className="relative flex flex-col items-center justify-end" style={{ width: barWidth, height: chartHeight }}>
+                  <div className="relative flex flex-col items-center justify-end overflow-hidden" style={{ width: barWidth, height: chartHeight }}>
                     <div
                       className="w-full rounded-t-md transition-all duration-500"
                       style={{ height: `${h1}px`, backgroundColor: barColor1(v1), maxHeight: `${chartHeight}px` }}
@@ -71,7 +71,7 @@ export function ParameterBarChart({ labels, series1, series2, label1, label2, ma
                     </span>
                   </div>
                   {/* Bar 2 */}
-                  <div className="relative flex flex-col items-center justify-end" style={{ width: barWidth, height: chartHeight }}>
+                  <div className="relative flex flex-col items-center justify-end overflow-hidden" style={{ width: barWidth, height: chartHeight }}>
                     <div
                       className="w-full rounded-t-md transition-all duration-500"
                       style={{ height: `${h2}px`, backgroundColor: barColor2(v2), maxHeight: `${chartHeight}px` }}
