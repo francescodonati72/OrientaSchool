@@ -11,7 +11,7 @@ export function ParameterBarChart({ labels, series1, series2, label1, label2, ma
   const barWidth = 14;
   const labelHeight = 56;
   const chartHeight = 200;
-  const totalHeight = chartHeight + labelHeight;
+  const numberHeight = 20;
 
   const yScale = (value: number) => {
     if (max <= 0) return 0;
@@ -37,8 +37,8 @@ export function ParameterBarChart({ labels, series1, series2, label1, label2, ma
     <div className="overflow-x-auto">
       <div className="inline-block min-w-full">
         <div className="flex" style={{ minWidth: labels.length * 80 + 40 }}>
-          {/* Y-axis labels */}
-          <div className="flex-shrink-0 w-10 flex flex-col justify-end" style={{ height: totalHeight }}>
+          {/* Y-axis */}
+          <div className="flex-shrink-0 w-10" style={{ paddingTop: numberHeight }}>
             <div className="flex flex-col justify-between" style={{ height: chartHeight }}>
               {[10, 7.5, 5, 2.5, 0].map((v) => (
                 <div key={v} className="text-[10px] text-slate-400 text-right pr-1 -mb-1.5">
@@ -58,27 +58,29 @@ export function ParameterBarChart({ labels, series1, series2, label1, label2, ma
 
             return (
               <div key={i} className="flex-shrink-0 flex flex-col items-center" style={{ width: 80 }}>
+                {/* Number row */}
+                <div className="flex justify-center gap-1.5" style={{ height: numberHeight }}>
+                  <div style={{ width: barWidth }} className="flex items-end justify-center">
+                    <span className="text-[10px] font-semibold text-slate-600">{v1 || ''}</span>
+                  </div>
+                  <div style={{ width: barWidth }} className="flex items-end justify-center">
+                    <span className="text-[10px] font-semibold text-slate-600">{v2 || ''}</span>
+                  </div>
+                </div>
+
                 {/* Bar area */}
                 <div className="flex items-end justify-center gap-1.5" style={{ height: chartHeight }}>
-                  {/* Bar 1 */}
-                  <div className="relative flex flex-col items-center justify-end overflow-hidden" style={{ width: barWidth, height: chartHeight }}>
+                  <div style={{ width: barWidth, height: chartHeight }} className="flex flex-col justify-end overflow-hidden">
                     <div
                       className="w-full rounded-t-md transition-all duration-500"
-                      style={{ height: `${h1}px`, backgroundColor: barColor1(v1), maxHeight: `${chartHeight}px` }}
+                      style={{ height: `${h1}px`, backgroundColor: barColor1(v1) }}
                     />
-                    <span className="absolute -top-5 text-[10px] font-semibold text-slate-600">
-                      {v1 || ''}
-                    </span>
                   </div>
-                  {/* Bar 2 */}
-                  <div className="relative flex flex-col items-center justify-end overflow-hidden" style={{ width: barWidth, height: chartHeight }}>
+                  <div style={{ width: barWidth, height: chartHeight }} className="flex flex-col justify-end overflow-hidden">
                     <div
                       className="w-full rounded-t-md transition-all duration-500"
-                      style={{ height: `${h2}px`, backgroundColor: barColor2(v2), maxHeight: `${chartHeight}px` }}
+                      style={{ height: `${h2}px`, backgroundColor: barColor2(v2) }}
                     />
-                    <span className="absolute -top-5 text-[10px] font-semibold text-slate-600">
-                      {v2 || ''}
-                    </span>
                   </div>
                 </div>
 
