@@ -85,7 +85,7 @@ function GradeInput({
           onChange={(e) => setInputVal(e.target.value)}
           onBlur={handleInputBlur}
           onKeyDown={handleInputKeyDown}
-          className="h-7 w-8 sm:w-10 rounded-lg border-2 border-brand-400 bg-white text-center text-sm font-bold text-slate-700 focus:outline-none"
+          className="h-7 w-8 sm:w-10 rounded-lg border-2 border-brand-400 bg-white text-center text-sm font-bold text-slate-700 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" 
         />
       ) : (
         <div
