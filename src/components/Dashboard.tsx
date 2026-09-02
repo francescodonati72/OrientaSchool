@@ -180,9 +180,14 @@ export function Dashboard({ analysisId, onBack, onOpenSettings }: DashboardProps
                       </option>
                     ))}
                   </select>
-                </div>
               </div>
             </div>
+            {schoolAId === schoolBId && (
+              <p className="mt-3 text-xs text-amber-600">
+                ⚠️ Stai confrontando la stessa scuola con se stessa. Seleziona due scuole diverse.
+              </p>
+            )}
+          </div>
 
             {compA && compB && (
               <>
