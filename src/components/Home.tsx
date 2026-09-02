@@ -296,7 +296,7 @@ export function Home({ onOpenAnalysis, onOpenSettings }: HomeProps) {
               </li>
             </ol>
             <p className="mt-4 text-xs text-slate-500 border-t border-slate-100 pt-4">
-              <span className="font-semibold text-slate-600">NB:</span> puoi anche aggiungere, togliere o modificare i parametri delle analisi, andando nelle Impostazioni (icona ingranaggio in alto a destra).
+              <span className="font-semibold text-slate-600">PARAMETRI:</span> all'inizio trovi già dei parametri inseriti, come riferimento iniziale. Ma li puoi anche modificare, eliminare, o aggiungere i parametri che vuoi: ti basta andare nelle Impostazioni (icona ingranaggio in alto a destra). 
             </p>
           </div>
         )}
