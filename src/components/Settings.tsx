@@ -132,7 +132,7 @@ export function Settings({ onBack }: SettingsProps) {
   };
 
   const handleHoldStart = (index: number, isTouch: boolean) => {
-    const delay = isTouch ? 2000 : 200;
+    const delay = isTouch ? 1000 : 200;
     holdTimer.current = setTimeout(() => {
       setDragEnabled(true);
       setDragIndex(index);
