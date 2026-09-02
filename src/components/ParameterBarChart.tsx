@@ -19,19 +19,10 @@ export function ParameterBarChart({ labels, series1, series2, label1, label2, ma
     return (clamped / max) * chartHeight;
   };
 
-  const barColor1 = (v: number) => {
-    if (v === 0) return '#e2e8f0';
-    if (v <= 5) return '#f87171';
-    if (v <= 7) return '#fb923c';
-    return '#4ade80';
-  };
-
-  const barColor2 = (v: number) => {
-    if (v === 0) return '#e2e8f0';
-    if (v <= 5) return '#ef4444';
-    if (v <= 7) return '#f59e0b';
-    return '#22c55e';
-  };
+  // Fasce sfondo: rosso 1-5 (50%), giallo 6-7 (20%), verde 8-10 (30%)
+  const redHeight = (5 / 10) * chartHeight;
+  const yellowHeight = (2 / 10) * chartHeight;
+  const greenHeight = (3 / 10) * chartHeight;
 
   return (
     <div className="overflow-x-auto">
@@ -68,18 +59,31 @@ export function ParameterBarChart({ labels, series1, series2, label1, label2, ma
                   </div>
                 </div>
 
-                {/* Bar area */}
-                <div className="flex items-end justify-center gap-1.5" style={{ height: chartHeight }}>
-                  <div style={{ width: barWidth, height: chartHeight }} className="flex flex-col justify-end overflow-hidden">
+                {/* Bar area con sfondo a fasce */}
+                <div
+                  className="flex items-end justify-center gap-1.5 relative"
+                  style={{ height: chartHeight, width: '100%' }}
+                >
+                  {/* Sfondo fasce */}
+                  <div className="absolute inset-0 flex flex-col pointer-events-none">
+                    <div style={{ height: greenHeight, backgroundColor: '#dcfce7' }} />
+                    <div style={{ height: yellowHeight, backgroundColor: '#fef9c3' }} />
+                    <div style={{ height: redHeight, backgroundColor: '#fee2e2' }} />
+                  </div>
+
+                  {/* Bar 1 - viola */}
+                  <div style={{ width: barWidth, height: chartHeight }} className="relative flex flex-col justify-end overflow-hidden z-10">
                     <div
                       className="w-full rounded-t-md transition-all duration-500"
-                      style={{ height: `${h1}px`, backgroundColor: barColor1(v1) }}
+                      style={{ height: `${h1}px`, backgroundColor: '#818cf8' }}
                     />
                   </div>
-                  <div style={{ width: barWidth, height: chartHeight }} className="flex flex-col justify-end overflow-hidden">
+
+                  {/* Bar 2 - azzurro */}
+                  <div style={{ width: barWidth, height: chartHeight }} className="relative flex flex-col justify-end overflow-hidden z-10">
                     <div
                       className="w-full rounded-t-md transition-all duration-500"
-                      style={{ height: `${h2}px`, backgroundColor: barColor2(v2) }}
+                      style={{ height: `${h2}px`, backgroundColor: '#38bdf8' }}
                     />
                   </div>
                 </div>
