@@ -292,7 +292,7 @@ export function Home({ onOpenAnalysis, onOpenSettings }: HomeProps) {
               </li>
               <li className="text-sm text-slate-600">
                 <p className="font-semibold text-slate-800 mb-1">3. Vai nella Dashboard (icona in alto):</p>
-                <p>qui puoi vedere i grafici finali, confrontare le scuole 2 alla volta, e orientarti nella scelta.</p>
+                <p>qui puoi vedere i grafici finali, confrontare le scuole 2 alla volta, e avere un aiuto nell'orientamento alla scelta.</p>
               </li>
             </ol>
             <p className="mt-4 text-xs text-slate-500 border-t border-slate-100 pt-4">
