@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { WhatsAppButton } from '@/components/WhatsAppButton';
 import {
   ArrowLeft, Plus, Settings as SettingsIcon, LogOut, MoreVertical,
   Pencil, Trash2, MapPin, School as SchoolIcon, AlertTriangle, X,
@@ -243,6 +244,7 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
               <Logo size="sm" />
             </div>
             <div className="flex items-center gap-3">
+              <WhatsAppButton />
               <Button variant="ghost" size="sm" onClick={onOpenDashboard} title="Dashboard">
                 <BarChart3 className="h-4 w-4" />
                 <span className="hidden sm:inline">Dashboard</span>
