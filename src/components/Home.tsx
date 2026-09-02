@@ -288,10 +288,10 @@ export function Home({ onOpenAnalysis, onOpenSettings }: HomeProps) {
               </li>
               <li className="text-sm text-slate-600">
                 <p className="font-semibold text-slate-800 mb-1">2. Aggiungi almeno 2 (o più) scuole che vuoi confrontare:</p>
-                <p>per ogni scuola che aggiungi, vai a inserire la valutazione di ogni parametro insrendo un voto (da 1 a 10) e se vuoi anche delle note. Procedi finché hai completato tutti i parametri, per ogni scuola.</p>
+                <p>per ogni scuola che aggiungi, vai a inserire la valutazione di ogni parametro inserendo un voto (da 1 a 10) e se vuoi anche delle note. Procedi finché hai completato tutti i parametri, per ogni scuola.</p>
               </li>
               <li className="text-sm text-slate-600">
-                <p className="font-semibold text-slate-800 mb-1">3. Vai nella Dashboard (icona in alto):</p>
+                <p className="font-semibold text-slate-800 mb-1">3. Quando hai finito, vai nella Dashboard (icona in alto):</p>
                 <p>qui puoi vedere i grafici finali, confrontare le scuole 2 alla volta, e avere un aiuto nell'orientamento alla scelta.</p>
               </li>
             </ol>
