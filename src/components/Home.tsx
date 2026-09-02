@@ -178,7 +178,7 @@ export function Home({ onOpenAnalysis, onOpenSettings }: HomeProps) {
           <div className="flex h-16 items-center justify-between">
             <Logo size="sm" />
             <div className="flex items-center gap-3">
-               <WhatsAppButton />
+              <WhatsAppButton />
               <Button variant="ghost" size="sm" onClick={onOpenSettings} title="Impostazioni">
                 <SettingsIcon className="h-4 w-4" />
                 <span className="hidden sm:inline">Impostazioni</span>
@@ -446,13 +446,26 @@ function EmptyState({ hasAnalyses, onCreate }: { hasAnalyses: boolean; onCreate:
       <p className="text-sm text-slate-500 mb-6 max-w-sm">
         {hasAnalyses
           ? 'Prova a modificare la ricerca per trovare quello che cerchi.'
-          : 'Inizia creando una nuova analisi di orientamento per i tuoi studenti.'}
+          : 'Inizia creando una nuova analisi di orientamento.'}
       </p>
       {!hasAnalyses && (
-        <Button onClick={onCreate}>
-          <Plus className="h-4 w-4" />
-          Crea Nuova Analisi
-        </Button>
+        <div className="mt-2 text-left max-w-sm bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+          <p className="text-sm font-semibold text-slate-700 mb-4">🎯 Benvenuti in OrientaSchool.<br />Per iniziare:</p>
+          <ol className="space-y-4">
+            <li className="text-sm text-slate-600">
+              <p className="font-semibold text-slate-800 mb-1">1. Clicca "Crea Nuova Analisi" in alto a destra:</p>
+              <p>dai un nome alla tua analisi (es. "Scuola Superiore", oppure "Scuola di tennis" ecc. in base a quello che stai cercando di analizzare)</p>
+            </li>
+            <li className="text-sm text-slate-600">
+              <p className="font-semibold text-slate-800 mb-1">2. Aggiungi almeno 2 (o più) scuole che vuoi confrontare:</p>
+              <p>per ogni scuola che aggiungi, potrai inserire la valutazione parametro per parametro (voto da 1 a 10)</p>
+            </li>
+            <li className="text-sm text-slate-600">
+              <p className="font-semibold text-slate-800 mb-1">3. Vai nella Dashboard (icona in alto):</p>
+              <p>qui puoi vedere i grafici finali, confrontare le scuole 2 alla volta, e orientarti nella scelta.</p>
+            </li>
+          </ol>
+        </div>
       )}
     </div>
   );
