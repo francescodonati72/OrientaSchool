@@ -15,7 +15,7 @@ export function ParameterBarChart({ labels, series1, series2, label1, label2, ma
 
   const yScale = (value: number) => {
     if (max <= 0) return 0;
-    const clamped = Math.min(value, max);
+    const clamped = Math.min(Math.max(value, 0), max);
     return (clamped / max) * chartHeight;
   };
 
@@ -50,8 +50,8 @@ export function ParameterBarChart({ labels, series1, series2, label1, label2, ma
 
           {/* Bars + labels */}
           {labels.map((label, i) => {
-            const v1 = Math.min(series1[i] ?? 0, max);
-            const v2 = Math.min(series2[i] ?? 0, max);
+            const v1 = Math.min(Math.max(series1[i] ?? 0, 0), max);
+            const v2 = Math.min(Math.max(series2[i] ?? 0, 0), max);
             const h1 = yScale(v1);
             const h2 = yScale(v2);
             const shortLabel = label.length > 14 ? label.slice(0, 12) + '…' : label;
@@ -64,7 +64,7 @@ export function ParameterBarChart({ labels, series1, series2, label1, label2, ma
                   <div className="relative flex flex-col items-center justify-end" style={{ width: barWidth, height: chartHeight }}>
                     <div
                       className="w-full rounded-t-md transition-all duration-500"
-                      style={{ height: `${h1}px`, backgroundColor: barColor1(v1) }}
+                      style={{ height: `${h1}px`, backgroundColor: barColor1(v1), maxHeight: `${chartHeight}px` }}
                     />
                     <span className="absolute -top-5 text-[10px] font-semibold text-slate-600">
                       {v1 || ''}
@@ -74,7 +74,7 @@ export function ParameterBarChart({ labels, series1, series2, label1, label2, ma
                   <div className="relative flex flex-col items-center justify-end" style={{ width: barWidth, height: chartHeight }}>
                     <div
                       className="w-full rounded-t-md transition-all duration-500"
-                      style={{ height: `${h2}px`, backgroundColor: barColor2(v2) }}
+                      style={{ height: `${h2}px`, backgroundColor: barColor2(v2), maxHeight: `${chartHeight}px` }}
                     />
                     <span className="absolute -top-5 text-[10px] font-semibold text-slate-600">
                       {v2 || ''}
@@ -98,11 +98,11 @@ export function ParameterBarChart({ labels, series1, series2, label1, label2, ma
         {/* Legend */}
         <div className="mt-2 flex items-center gap-4 text-xs pl-10">
           <span className="flex items-center gap-1.5">
-            <span className="h-3 w-3 rounded-sm" style={{ backgroundColor: '#4ade80' }} />
+            <span className="h-3 w-3 rounded-sm" style={{ backgroundColor: '#818cf8' }} />
             <span className="text-slate-600">{label1}</span>
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="h-3 w-3 rounded-sm" style={{ backgroundColor: '#22c55e' }} />
+            <span className="h-3 w-3 rounded-sm" style={{ backgroundColor: '#38bdf8' }} />
             <span className="text-slate-600">{label2}</span>
           </span>
         </div>
