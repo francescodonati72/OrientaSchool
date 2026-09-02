@@ -20,9 +20,13 @@ export function ParametersProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   const refresh = useCallback(async () => {
+        const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
     const { data, error } = await supabase
       .from('parameters')
       .select('*')
+      .eq('user_id', user.id)
       .order('sort_order', { ascending: true });
 
     if (error) {
