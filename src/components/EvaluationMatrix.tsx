@@ -115,7 +115,7 @@ export function EvaluationMatrix({
               paramIndex % 2 === 0 ? 'bg-white' : 'bg-slate-50'
             }`}>
               <div className="text-xs sm:text-sm font-medium text-slate-700 leading-snug line-clamp-2">{param.title}</div>
-              <div className="hidden sm:block text-xs text-slate-400 mt-0.5 line-clamp-2">{param.description}</div>
+            <div className="text-xs text-slate-400 mt-0.5 line-clamp-2">{param.description}</div>
             </div>
 
             {/* School cells */}
