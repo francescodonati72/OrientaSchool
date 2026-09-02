@@ -36,7 +36,6 @@ export function ParametersProvider({ children }: { children: ReactNode }) {
 
     if (!data || data.length === 0) {
       // Seed defaults
-      const { data: { user } } = await supabase.auth.getUser();
       const inserts = DEFAULT_PARAMETERS.map((p, i) => ({
         user_id: user?.id,
         title: p.title,
