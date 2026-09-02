@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { WhatsAppButton } from '@/components/WhatsAppButton';
 import {
   ArrowLeft, Settings as SettingsIcon, LogOut, BarChart3, Sparkles,
   Trophy, TrendingUp, TrendingDown, Minus, Loader2, School as SchoolIcon,
