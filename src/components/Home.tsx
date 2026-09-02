@@ -243,11 +243,23 @@ export function Home({ onOpenAnalysis, onOpenSettings }: HomeProps) {
               </div>
             ))}
           </div>
+        ) : filtered.length === 0 && analyses.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-12 text-center animate-fade-in">
+            <div className="mb-5 h-20 w-20 rounded-2xl bg-gradient-to-br from-brand-100 to-sky-100 flex items-center justify-center">
+              <FolderOpen className="h-10 w-10 text-brand-500" />
+            </div>
+            <h3 className="text-xl font-semibold text-slate-700 mb-2">Crea la tua prima analisi</h3>
+            <p className="text-sm text-slate-500 mb-6 max-w-sm">
+              Inizia creando una nuova analisi di orientamento.
+            </p>
+          </div>
         ) : filtered.length === 0 ? (
-          <EmptyState
-            hasAnalyses={analyses.length > 0}
-            onCreate={() => { setNewName(''); setFormError(null); setCreateOpen(true); }}
-          />
+          <div className="flex flex-col items-center justify-center py-12 text-center animate-fade-in">
+            <h3 className="text-xl font-semibold text-slate-700 mb-2">Nessuna analisi trovata</h3>
+            <p className="text-sm text-slate-500 max-w-sm">
+              Prova a modificare la ricerca per trovare quello che cerchi.
+            </p>
+          </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {filtered.map((analysis) => (
@@ -262,6 +274,30 @@ export function Home({ onOpenAnalysis, onOpenSettings }: HomeProps) {
                 onOpen={() => onOpenAnalysis(analysis.id)}
               />
             ))}
+          </div>
+        )}
+
+        {/* Istruzioni — sempre visibili */}
+        {!loading && (
+          <div className="mt-10 max-w-sm bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+            <p className="text-sm font-semibold text-slate-700 mb-4">🎯 Benvenuti in OrientaSchool.<br />Per iniziare:</p>
+            <ol className="space-y-4">
+              <li className="text-sm text-slate-600">
+                <p className="font-semibold text-slate-800 mb-1">1. Clicca "Crea Nuova Analisi" in alto a destra:</p>
+                <p>dai un nome alla tua analisi (es. "Scuola Superiore", oppure "Scuola di tennis" ecc. in base a quello che stai cercando di analizzare)</p>
+              </li>
+              <li className="text-sm text-slate-600">
+                <p className="font-semibold text-slate-800 mb-1">2. Aggiungi almeno 2 (o più) scuole che vuoi confrontare:</p>
+                <p>per ogni scuola che aggiungi, potrai inserire la valutazione parametro per parametro (voto da 1 a 10)</p>
+              </li>
+              <li className="text-sm text-slate-600">
+                <p className="font-semibold text-slate-800 mb-1">3. Vai nella Dashboard (icona in alto):</p>
+                <p>qui puoi vedere i grafici finali, confrontare le scuole 2 alla volta, e orientarti nella scelta.</p>
+              </li>
+            </ol>
+            <p className="mt-4 text-xs text-slate-500 border-t border-slate-100 pt-4">
+              <span className="font-semibold text-slate-600">NB:</span> puoi anche aggiungere, togliere o modificare i parametri delle analisi, andando nelle Impostazioni (icona ingranaggio in alto a destra).
+            </p>
           </div>
         )}
       </main>
@@ -430,45 +466,6 @@ function AnalysisCard({
           Ultimo salvataggio: {relativeTime(analysis.updated_at)}
         </div>
       </div>
-    </div>
-  );
-}
-
-function EmptyState({ hasAnalyses, onCreate }: { hasAnalyses: boolean; onCreate: () => void }) {
-  return (
-    <div className="flex flex-col items-center justify-center py-20 text-center animate-fade-in">
-      <div className="mb-5 h-20 w-20 rounded-2xl bg-gradient-to-br from-brand-100 to-sky-100 flex items-center justify-center">
-        <FolderOpen className="h-10 w-10 text-brand-500" />
-      </div>
-      <h3 className="text-xl font-semibold text-slate-700 mb-2">
-        {hasAnalyses ? 'Nessuna analisi trovata' : 'Crea la tua prima analisi'}
-      </h3>
-      <p className="text-sm text-slate-500 mb-6 max-w-sm">
-        {hasAnalyses
-          ? 'Prova a modificare la ricerca per trovare quello che cerchi.'
-          : 'Inizia creando una nuova analisi di orientamento.'}
-      </p>
-      {!hasAnalyses && (
-        <div className="mt-2 text-left max-w-sm bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
-          <p className="text-sm font-semibold text-slate-700 mb-4">🎯 Benvenuti in OrientaSchool.<br />Per iniziare:</p>
-          <ol className="space-y-4">
-            <li className="text-sm text-slate-600">
-              <p className="font-semibold text-slate-800 mb-1">1. Clicca "Crea Nuova Analisi" in alto a destra:</p>
-              <p>dai un nome alla tua analisi (es. "Scuola Superiore", oppure "Scuola di tennis" ecc. in base a quello che stai cercando di analizzare)</p>
-            </li>
-            <li className="text-sm text-slate-600">
-              <p className="font-semibold text-slate-800 mb-1">2. Aggiungi almeno 2 (o più) scuole che vuoi confrontare:</p>
-              <p>per ogni scuola che aggiungi, potrai inserire la valutazione parametro per parametro (voto da 1 a 10)</p>
-            </li>
-            <li className="text-sm text-slate-600">
-              <p className="font-semibold text-slate-800 mb-1">3. Vai nella Dashboard (icona in alto):</p>
-              <p>qui puoi vedere i grafici finali, confrontare le scuole 2 alla volta, e orientarti nella scelta.</p>
-            </li>
-            <p className="mt-4 text-xs text-slate-500 border-t border-slate-100 pt-4">
-            <span className="font-semibold text-slate-600">NB:</span> puoi anche aggiungere, togliere o modificare i parametri delle analisi, andando nelle Impostazioni (icona ingranaggio in alto a destra).
-          </ol>
-        </div>
-      )}
     </div>
   );
 }
