@@ -199,7 +199,7 @@ export function Settings({ onBack }: SettingsProps) {
         {/* Info banner */}
         <div className="mb-6 rounded-xl bg-brand-50 border border-brand-200 px-4 py-3">
           <p className="text-sm text-brand-700">
-            <span className="font-medium">Suggerimento:</span> Tieni premuto sull'icona ☰ per trascinare e riordinare i parametri. Da mobile tieni premuto 2 secondi, da computer è immediato.
+            <span className="font-medium">Suggerimento:</span> Tieni premuto sull'icona ☰ per trascinare e riordinare i parametri. Da mobile tieni premuto 1 secondi, da computer è immediato.
           </p>
         </div>
 
