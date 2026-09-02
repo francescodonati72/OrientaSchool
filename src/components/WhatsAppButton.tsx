@@ -5,7 +5,7 @@ export function WhatsAppButton() {
 
   return (
     
-      href={url}
+      <a href={url}
       target="_blank"
       rel="noopener noreferrer"
       className="flex items-center gap-1.5 rounded-xl bg-[#25D366] px-3 py-2 text-xs font-semibold text-white shadow-sm hover:bg-[#1ebe5d] transition-colors"
