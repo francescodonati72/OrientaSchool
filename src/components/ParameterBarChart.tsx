@@ -9,15 +9,28 @@ interface ParameterBarChartProps {
 
 export function ParameterBarChart({ labels, series1, series2, label1, label2, max }: ParameterBarChartProps) {
   const barWidth = 14;
-  const gap = 6;
-  const pairWidth = barWidth * 2 + gap;
   const labelHeight = 56;
   const chartHeight = 200;
   const totalHeight = chartHeight + labelHeight;
 
   const yScale = (value: number) => {
     if (max <= 0) return 0;
-    return (value / max) * chartHeight;
+    const clamped = Math.min(value, max);
+    return (clamped / max) * chartHeight;
+  };
+
+  const barColor1 = (v: number) => {
+    if (v === 0) return '#e2e8f0';
+    if (v <= 5) return '#f87171';
+    if (v <= 7) return '#fb923c';
+    return '#4ade80';
+  };
+
+  const barColor2 = (v: number) => {
+    if (v === 0) return '#e2e8f0';
+    if (v <= 5) return '#ef4444';
+    if (v <= 7) return '#f59e0b';
+    return '#22c55e';
   };
 
   return (
@@ -37,8 +50,8 @@ export function ParameterBarChart({ labels, series1, series2, label1, label2, ma
 
           {/* Bars + labels */}
           {labels.map((label, i) => {
-            const v1 = series1[i] ?? 0;
-            const v2 = series2[i] ?? 0;
+            const v1 = Math.min(series1[i] ?? 0, max);
+            const v2 = Math.min(series2[i] ?? 0, max);
             const h1 = yScale(v1);
             const h2 = yScale(v2);
             const shortLabel = label.length > 14 ? label.slice(0, 12) + '…' : label;
@@ -48,28 +61,20 @@ export function ParameterBarChart({ labels, series1, series2, label1, label2, ma
                 {/* Bar area */}
                 <div className="flex items-end justify-center gap-1.5" style={{ height: chartHeight }}>
                   {/* Bar 1 */}
-                  <div className="relative group flex flex-col items-center justify-end" style={{ width: barWidth, height: chartHeight }}>
+                  <div className="relative flex flex-col items-center justify-end" style={{ width: barWidth, height: chartHeight }}>
                     <div
-                      className={`w-full rounded-t-md transition-all duration-500 ${
-                        v1 === 0 ? 'bg-slate-100' :
-                        v1 <= 5 ? 'bg-error-400' :
-                        v1 <= 7 ? 'bg-amber-400' : 'bg-success-400'
-                      }`}
-                      style={{ height: `${h1}px` }}
+                      className="w-full rounded-t-md transition-all duration-500"
+                      style={{ height: `${h1}px`, backgroundColor: barColor1(v1) }}
                     />
                     <span className="absolute -top-5 text-[10px] font-semibold text-slate-600">
                       {v1 || ''}
                     </span>
                   </div>
                   {/* Bar 2 */}
-                  <div className="relative group flex flex-col items-center justify-end" style={{ width: barWidth, height: chartHeight }}>
+                  <div className="relative flex flex-col items-center justify-end" style={{ width: barWidth, height: chartHeight }}>
                     <div
-                      className={`w-full rounded-t-md transition-all duration-500 ${
-                        v2 === 0 ? 'bg-slate-100' :
-                        v2 <= 5 ? 'bg-error-500' :
-                        v2 <= 7 ? 'bg-amber-500' : 'bg-success-500'
-                      }`}
-                      style={{ height: `${h2}px` }}
+                      className="w-full rounded-t-md transition-all duration-500"
+                      style={{ height: `${h2}px`, backgroundColor: barColor2(v2) }}
                     />
                     <span className="absolute -top-5 text-[10px] font-semibold text-slate-600">
                       {v2 || ''}
@@ -93,11 +98,11 @@ export function ParameterBarChart({ labels, series1, series2, label1, label2, ma
         {/* Legend */}
         <div className="mt-2 flex items-center gap-4 text-xs pl-10">
           <span className="flex items-center gap-1.5">
-            <span className="h-3 w-3 rounded-sm bg-indigo-400" />
+            <span className="h-3 w-3 rounded-sm" style={{ backgroundColor: '#4ade80' }} />
             <span className="text-slate-600">{label1}</span>
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="h-3 w-3 rounded-sm bg-sky-500" />
+            <span className="h-3 w-3 rounded-sm" style={{ backgroundColor: '#22c55e' }} />
             <span className="text-slate-600">{label2}</span>
           </span>
         </div>
