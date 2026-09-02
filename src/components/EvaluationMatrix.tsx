@@ -39,21 +39,6 @@ export function EvaluationMatrix({
   onGradeChange,
   onNoteChange,
 }: EvaluationMatrixProps) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const handleWheel = (e: WheelEvent) => {
-      if (e.deltaX !== 0) {
-        e.preventDefault();
-        el.scrollLeft += e.deltaY;
-      }
-    };
-    el.addEventListener('wheel', handleWheel, { passive: false });
-    return () => el.removeEventListener('wheel', handleWheel);
-  }, []);
-
   if (schools.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-16 text-center">
@@ -90,22 +75,28 @@ export function EvaluationMatrix({
     }, 0);
   };
 
+  const paramColW = 'w-28 sm:w-56';
+  const schoolColW = 'w-32 sm:w-64';
+
   return (
-    <div className="overflow-x-auto" ref={scrollRef}>
-      <div className="inline-block min-w-full">
+    <div className="overflow-x-auto">
+      <div className="inline-flex flex-col min-w-full">
+
         {/* Header row */}
-        <div className="flex border-b-2 border-slate-200 sticky top-0 z-10 bg-white">
-          <div className="w-64 flex-shrink-0 px-4 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
+        <div className="flex border-b-2 border-slate-200 bg-white sticky top-0 z-20">
+          {/* Sticky label header */}
+          <div className={`${paramColW} flex-shrink-0 px-2 sm:px-4 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500 sticky left-0 z-30 bg-white border-r border-slate-200`}>
             Parametro
           </div>
+          {/* School headers */}
           {schools.map((school) => (
             <div
               key={school.id}
-              className="w-72 flex-shrink-0 px-4 py-3 border-l border-slate-200"
+              className={`${schoolColW} flex-shrink-0 px-2 sm:px-4 py-3 border-l border-slate-200`}
             >
-              <div className="text-sm font-semibold text-slate-800 truncate">{school.name}</div>
+              <div className="text-xs sm:text-sm font-semibold text-slate-800 truncate">{school.name}</div>
               {school.location && (
-                <div className="text-xs text-slate-400 truncate">{school.location}</div>
+                <div className="text-[10px] sm:text-xs text-slate-400 truncate">{school.location}</div>
               )}
             </div>
           ))}
@@ -119,10 +110,12 @@ export function EvaluationMatrix({
               paramIndex % 2 === 0 ? 'bg-white' : 'bg-slate-50/30'
             }`}
           >
-            {/* Parameter label */}
-            <div className="w-64 flex-shrink-0 px-4 py-3">
-              <div className="text-sm font-medium text-slate-700 leading-snug">{param.title}</div>
-              <div className="text-xs text-slate-400 mt-0.5 line-clamp-2">{param.description}</div>
+            {/* Sticky parameter label */}
+            <div className={`${paramColW} flex-shrink-0 px-2 sm:px-4 py-3 sticky left-0 z-10 border-r border-slate-200 ${
+              paramIndex % 2 === 0 ? 'bg-white' : 'bg-slate-50'
+            }`}>
+              <div className="text-xs sm:text-sm font-medium text-slate-700 leading-snug line-clamp-2">{param.title}</div>
+              <div className="hidden sm:block text-xs text-slate-400 mt-0.5 line-clamp-2">{param.description}</div>
             </div>
 
             {/* School cells */}
@@ -132,7 +125,7 @@ export function EvaluationMatrix({
               return (
                 <div
                   key={school.id}
-                  className={`w-72 flex-shrink-0 px-4 py-3 border-l border-slate-200 ${gradeColorClass(grade)}`}
+                  className={`${schoolColW} flex-shrink-0 px-2 sm:px-4 py-3 border-l border-slate-200 ${gradeColorClass(grade)}`}
                 >
                   {/* Grade input */}
                   <div className="flex items-center gap-1 mb-2">
@@ -143,7 +136,7 @@ export function EvaluationMatrix({
                     >
                       −
                     </button>
-                    <div className={`h-7 w-10 rounded-lg flex items-center justify-center text-sm font-bold ${gradeBadgeClass(grade)}`}>
+                    <div className={`h-7 w-8 sm:w-10 rounded-lg flex items-center justify-center text-sm font-bold ${gradeBadgeClass(grade)}`}>
                       {grade ?? '–'}
                     </div>
                     <button
@@ -159,8 +152,8 @@ export function EvaluationMatrix({
                     type="text"
                     value={note}
                     onChange={(e) => onNoteChange(school.id, param.id, e.target.value)}
-                    placeholder="Nota breve..."
-                    className="w-full h-8 rounded-lg border border-slate-200 bg-white px-2.5 text-xs text-slate-600 placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-300 focus:border-brand-400 transition-colors"
+                    placeholder="Nota..."
+                    className="w-full h-8 rounded-lg border border-slate-200 bg-white px-1.5 sm:px-2.5 text-xs text-slate-600 placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-300 focus:border-brand-400 transition-colors"
                   />
                 </div>
               );
@@ -170,9 +163,9 @@ export function EvaluationMatrix({
 
         {/* Totals row */}
         <div className="flex border-t-2 border-slate-300 bg-slate-50">
-          <div className="w-64 flex-shrink-0 px-4 py-3.5">
-            <div className="text-sm font-bold uppercase tracking-wide text-slate-700">
-              Tot Punti Finali
+          <div className={`${paramColW} flex-shrink-0 px-2 sm:px-4 py-3.5 sticky left-0 z-10 bg-slate-50 border-r border-slate-200`}>
+            <div className="text-xs sm:text-sm font-bold uppercase tracking-wide text-slate-700">
+              Totale
             </div>
           </div>
           {schools.map((school) => {
@@ -180,16 +173,17 @@ export function EvaluationMatrix({
             return (
               <div
                 key={school.id}
-                className="w-72 flex-shrink-0 px-4 py-3.5 border-l border-slate-200 flex items-center justify-between"
+                className={`${schoolColW} flex-shrink-0 px-2 sm:px-4 py-3.5 border-l border-slate-200 flex items-center justify-between`}
               >
-                <span className="text-xs text-slate-500">Somma voti:</span>
-                <span className={`text-2xl font-bold ${totalColorClass(total)}`}>
+                <span className="hidden sm:inline text-xs text-slate-500">Somma voti:</span>
+                <span className={`text-xl sm:text-2xl font-bold ${totalColorClass(total)}`}>
                   {total}
                 </span>
               </div>
             );
           })}
         </div>
+
       </div>
     </div>
   );
