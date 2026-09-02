@@ -90,7 +90,7 @@ export function SignUp({ onNavigate, onSignedUp }: SignUpProps) {
           autoComplete="email"
         />
 
-        <div>
+        <div className="relative">
           <Input
             label="Password"
             type={showPassword ? 'text' : 'password'}
