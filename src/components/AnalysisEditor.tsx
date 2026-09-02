@@ -390,7 +390,7 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
               />
             </div>
 
-{/* Legend */}
+            {/* Legend */}
             <div className="mt-4 flex flex-wrap items-center gap-4 text-xs">
               <span className="flex items-center gap-1.5">
                 <span className="h-3 w-3 rounded bg-error-500" />
