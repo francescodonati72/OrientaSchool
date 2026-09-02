@@ -464,6 +464,8 @@ function EmptyState({ hasAnalyses, onCreate }: { hasAnalyses: boolean; onCreate:
               <p className="font-semibold text-slate-800 mb-1">3. Vai nella Dashboard (icona in alto):</p>
               <p>qui puoi vedere i grafici finali, confrontare le scuole 2 alla volta, e orientarti nella scelta.</p>
             </li>
+            <p className="mt-4 text-xs text-slate-500 border-t border-slate-100 pt-4">
+            <span className="font-semibold text-slate-600">NB:</span> puoi anche aggiungere, togliere o modificare i parametri delle analisi, andando nelle Impostazioni (icona ingranaggio in alto a destra).
           </ol>
         </div>
       )}
