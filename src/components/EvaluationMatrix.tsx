@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import type { Parameter, School, AnalysisData } from '@/lib/types';
 
 interface EvaluationMatrixProps {
@@ -30,6 +30,81 @@ function totalColorClass(total: number): string {
   if (ratio < 0.4) return 'text-error-600';
   if (ratio < 0.6) return 'text-amber-600';
   return 'text-success-600';
+}
+
+function GradeInput({
+  grade,
+  onGradeChange,
+}: {
+  grade: number | null;
+  onGradeChange: (value: number | null) => void;
+}) {
+  const [editing, setEditing] = useState(false);
+  const [inputVal, setInputVal] = useState('');
+
+  const handleBadgeClick = () => {
+    setInputVal(grade !== null ? String(grade) : '');
+    setEditing(true);
+  };
+
+  const handleInputBlur = () => {
+    const n = parseInt(inputVal, 10);
+    if (!isNaN(n) && n >= 1 && n <= 10) {
+      onGradeChange(n);
+    } else if (inputVal === '') {
+      onGradeChange(null);
+    }
+    setEditing(false);
+  };
+
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      (e.target as HTMLInputElement).blur();
+    }
+    if (e.key === 'Escape') {
+      setEditing(false);
+    }
+  };
+
+  return (
+    <div className="flex items-center gap-1 mb-2">
+      <button
+        type="button"
+        onClick={() => onGradeChange(Math.max(1, (grade ?? 1) - 1))}
+        className="h-7 w-7 rounded-lg border border-slate-200 bg-white text-slate-500 hover:bg-slate-100 transition-colors flex items-center justify-center text-sm font-medium flex-shrink-0"
+      >
+        −
+      </button>
+      {editing ? (
+        <input
+          type="number"
+          min={1}
+          max={10}
+          autoFocus
+          value={inputVal}
+          onChange={(e) => setInputVal(e.target.value)}
+          onBlur={handleInputBlur}
+          onKeyDown={handleInputKeyDown}
+          className="h-7 w-8 sm:w-10 rounded-lg border-2 border-brand-400 bg-white text-center text-sm font-bold text-slate-700 focus:outline-none"
+        />
+      ) : (
+        <div
+          onClick={handleBadgeClick}
+          className={`h-7 w-8 sm:w-10 rounded-lg flex items-center justify-center text-sm font-bold cursor-pointer hover:opacity-80 transition-opacity ${gradeBadgeClass(grade)}`}
+          title="Clicca per digitare il voto"
+        >
+          {grade ?? '–'}
+        </div>
+      )}
+      <button
+        type="button"
+        onClick={() => onGradeChange(Math.min(10, (grade ?? 0) + 1))}
+        className="h-7 w-7 rounded-lg border border-slate-200 bg-white text-slate-500 hover:bg-slate-100 transition-colors flex items-center justify-center text-sm font-medium flex-shrink-0"
+      >
+        +
+      </button>
+    </div>
+  );
 }
 
 export function EvaluationMatrix({
@@ -75,8 +150,8 @@ export function EvaluationMatrix({
     }, 0);
   };
 
-  const paramColW = 'w-28 sm:w-56';
-  const schoolColW = 'w-32 sm:w-64';
+  const paramColW = 'w-28 sm:w-48';
+  const schoolColW = 'w-32 sm:w-44';
 
   return (
     <div className="overflow-x-auto">
@@ -84,15 +159,13 @@ export function EvaluationMatrix({
 
         {/* Header row */}
         <div className="flex border-b-2 border-slate-200 bg-white sticky top-0 z-20">
-          {/* Sticky label header */}
           <div className={`${paramColW} flex-shrink-0 px-2 sm:px-4 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500 sticky left-0 z-30 bg-white border-r border-slate-200`}>
             Parametro
           </div>
-          {/* School headers */}
           {schools.map((school) => (
             <div
               key={school.id}
-              className={`${schoolColW} flex-shrink-0 px-2 sm:px-4 py-3 border-l border-slate-200`}
+              className={`${schoolColW} flex-shrink-0 px-2 sm:px-3 py-3 border-l border-slate-200`}
             >
               <div className="text-xs sm:text-sm font-semibold text-slate-800 truncate">{school.name}</div>
               {school.location && (
@@ -115,7 +188,7 @@ export function EvaluationMatrix({
               paramIndex % 2 === 0 ? 'bg-white' : 'bg-slate-50'
             }`}>
               <div className="text-xs sm:text-sm font-medium text-slate-700 leading-snug line-clamp-2">{param.title}</div>
-            <div className="text-xs text-slate-400 mt-0.5 line-clamp-2">{param.description}</div>
+              <div className="text-xs text-slate-400 mt-0.5 line-clamp-2">{param.description}</div>
             </div>
 
             {/* School cells */}
@@ -125,29 +198,12 @@ export function EvaluationMatrix({
               return (
                 <div
                   key={school.id}
-                  className={`${schoolColW} flex-shrink-0 px-2 sm:px-4 py-3 border-l border-slate-200 ${gradeColorClass(grade)}`}
+                  className={`${schoolColW} flex-shrink-0 px-2 sm:px-3 py-3 border-l border-slate-200 ${gradeColorClass(grade)}`}
                 >
-                  {/* Grade input */}
-                  <div className="flex items-center gap-1 mb-2">
-                    <button
-                      type="button"
-                      onClick={() => onGradeChange(school.id, param.id, Math.max(1, (grade ?? 1) - 1))}
-                      className="h-7 w-7 rounded-lg border border-slate-200 bg-white text-slate-500 hover:bg-slate-100 transition-colors flex items-center justify-center text-sm font-medium"
-                    >
-                      −
-                    </button>
-                    <div className={`h-7 w-8 sm:w-10 rounded-lg flex items-center justify-center text-sm font-bold ${gradeBadgeClass(grade)}`}>
-                      {grade ?? '–'}
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => onGradeChange(school.id, param.id, Math.min(10, (grade ?? 0) + 1))}
-                      className="h-7 w-7 rounded-lg border border-slate-200 bg-white text-slate-500 hover:bg-slate-100 transition-colors flex items-center justify-center text-sm font-medium"
-                    >
-                      +
-                    </button>
-                  </div>
-                  {/* Note input */}
+                  <GradeInput
+                    grade={grade}
+                    onGradeChange={(value) => onGradeChange(school.id, param.id, value)}
+                  />
                   <input
                     type="text"
                     value={note}
@@ -173,9 +229,9 @@ export function EvaluationMatrix({
             return (
               <div
                 key={school.id}
-                className={`${schoolColW} flex-shrink-0 px-2 sm:px-4 py-3.5 border-l border-slate-200 flex items-center justify-between`}
+                className={`${schoolColW} flex-shrink-0 px-2 sm:px-3 py-3.5 border-l border-slate-200 flex items-center justify-between`}
               >
-                <span className="hidden sm:inline text-xs text-slate-500">Somma voti:</span>
+                <span className="hidden sm:inline text-xs text-slate-500">Totale:</span>
                 <span className={`text-xl sm:text-2xl font-bold ${totalColorClass(total)}`}>
                   {total}
                 </span>
