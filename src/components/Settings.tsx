@@ -109,7 +109,6 @@ export function Settings({ onBack }: SettingsProps) {
     e.dataTransfer.dropEffect = 'move';
     if (dragIndex !== null && dragIndex !== index) {
       setDragOverIndex(index);
-      // Reorder locally for visual feedback
       const items = [...displayParams];
       const [moved] = items.splice(dragIndex, 1);
       items.splice(index, 0, moved);
@@ -132,11 +131,12 @@ export function Settings({ onBack }: SettingsProps) {
     }
   };
 
-  const handleHoldStart = (index: number) => {
+  const handleHoldStart = (index: number, isTouch: boolean) => {
+    const delay = isTouch ? 2000 : 200;
     holdTimer.current = setTimeout(() => {
       setDragEnabled(true);
       setDragIndex(index);
-    }, 2000);
+    }, delay);
   };
 
   const handleHoldEnd = () => {
@@ -199,7 +199,7 @@ export function Settings({ onBack }: SettingsProps) {
         {/* Info banner */}
         <div className="mb-6 rounded-xl bg-brand-50 border border-brand-200 px-4 py-3">
           <p className="text-sm text-brand-700">
-            <span className="font-medium">Suggerimento:</span> Tieni premuto per 2 secondi su un parametro per trascinarlo e riordinarlo. I parametri appariranno in tutte le tue future analisi.
+            <span className="font-medium">Suggerimento:</span> Tieni premuto sull'icona ☰ per trascinare e riordinare i parametri. Da mobile tieni premuto 2 secondi, da computer è immediato.
           </p>
         </div>
 
@@ -230,10 +230,8 @@ export function Settings({ onBack }: SettingsProps) {
                 onDragStart={(e) => handleDragStart(e, index)}
                 onDragOver={(e) => handleDragOver(e, index)}
                 onDragEnd={handleDragEnd}
-                onMouseDown={() => handleHoldStart(index)}
                 onMouseUp={handleHoldEnd}
                 onMouseLeave={handleHoldEnd}
-                onTouchStart={() => handleHoldStart(index)}
                 onTouchEnd={handleHoldEnd}
                 className={`card p-4 flex items-center gap-3 transition-all duration-200 ${
                   dragEnabled ? 'cursor-grab' : 'cursor-default'
@@ -243,7 +241,11 @@ export function Settings({ onBack }: SettingsProps) {
                   dragEnabled && dragIndex === index ? 'opacity-60 shadow-lg' : ''
                 } ${dragEnabled ? 'border-brand-300' : ''}`}
               >
-                <div className={`flex-shrink-0 ${dragEnabled ? 'text-brand-500' : 'text-slate-300'}`}>
+                <div
+                  className={`flex-shrink-0 cursor-grab ${dragEnabled ? 'text-brand-500' : 'text-slate-300'}`}
+                  onMouseDown={() => handleHoldStart(index, false)}
+                  onTouchStart={() => handleHoldStart(index, true)}
+                >
                   <GripVertical className="h-5 w-5" />
                 </div>
                 <div className="flex-1 min-w-0">
