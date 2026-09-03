@@ -336,9 +336,16 @@ export function Dashboard({ analysisId, onBack, onOpenSettings }: DashboardProps
                         <div className="flex items-start gap-2">
                           <Sparkles className="h-4 w-4 text-brand-600 flex-shrink-0 mt-0.5" />
                           <p className="text-sm text-brand-700 leading-relaxed">
-                            <span className="font-semibold">Consiglio: </span>
-                            {aiEval.recommendation}
+                            <span className="font-semibold">Consiglio: </span>{aiEval.recommendation}
                           </p>
+                        </div>
+                      </div>
+                      <div className="rounded-xl bg-slate-50 border border-slate-200 p-4 text-center">
+                        <p className="text-sm text-slate-600 mb-4">
+                          Se senti che la scelta non è ancora chiara, se vuoi approfondire alcuni aspetti, se vuoi un ulteriore aiuto per capire come fare la scelta che per te oggi è più utile, puoi chiedere il supporto del coach cliccando il bottone verde qui sotto.
+                        </p>
+                        <div className="flex justify-center">
+                          <WhatsAppButton fullName={fullName} email={displayEmail} />
                         </div>
                       </div>
                     </div>
