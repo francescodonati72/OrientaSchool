@@ -288,7 +288,7 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="text-xl font-semibold text-slate-800">Scuole</h2>
-              <p className="text-sm text-slate-500">Colonne dell'analisi corrente</p>
+              <p className="text-sm text-slate-500">Inserisci minimo 2 scuole per fare il confronto nell'analisi corrente</p>
             </div>
             <Button onClick={() => { setSchoolName(''); setSchoolLocation(''); setFormError(null); setAddSchoolOpen(true); }}>
               <Plus className="h-4 w-4" />
