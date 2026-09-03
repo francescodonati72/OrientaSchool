@@ -75,6 +75,7 @@
   }
 }
 @media print {
+    tr { page-break-inside: avoid; }
   .no-print { display: none !important; }
   .print-only { display: block !important; }
   .print-page-break { page-break-before: always; break-before: page; }
