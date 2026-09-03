@@ -391,20 +391,7 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
             </div>
 
             {/* Legend */}
-            <div className="mt-4 flex flex-wrap items-center gap-4 text-xs">
-              <span className="flex items-center gap-1.5">
-                <span className="h-3 w-3 rounded bg-error-500" />
-                <span className="text-slate-600">1–5 Critico</span>
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="h-3 w-3 rounded bg-amber-500" />
-                <span className="text-slate-600">6–7 Medio</span>
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="h-3 w-3 rounded bg-success-500" />
-                <span className="text-slate-600">8–10 Ottimo</span>
-              </span>
-            </div>
+            
             <div className="mt-6 flex justify-center">
               <WhatsAppButton />
             </div>
