@@ -342,7 +342,7 @@ export function Dashboard({ analysisId, onBack, onOpenSettings }: DashboardProps
                       </div>
                       <div className="rounded-xl bg-slate-50 border border-slate-200 p-4 text-center">
                         <p className="text-sm text-slate-600 mb-4">
-                          Se senti che la scelta non è ancora chiara, se vuoi approfondire alcuni aspetti, se vuoi un ulteriore aiuto per capire come fare la scelta che per te oggi è più utile, puoi chiedere il supporto del coach cliccando il bottone verde qui sotto.
+                          Se vuoi approfondire, o se vuoi un ulteriore aiuto per chiarire qual'è la scelta che per te oggi è più utile, chiedi supporto al coach: clicca il bottone verde qui sotto.
                         </p>
                         <div className="flex justify-center">
                           <WhatsAppButton fullName={fullName} email={displayEmail} />
