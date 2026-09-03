@@ -1,21 +1,10 @@
-interface WhatsAppButtonProps {
-  fullName?: string;
-  email?: string;
-}
-
-export function WhatsAppButton({ fullName, email }: WhatsAppButtonProps) {
+export function WhatsAppButton() {
   const phone = '393392323000';
-  
-  const message = [
-    'Ciao, ho bisogno di aiuto con OrientaSchool.',
-    fullName ? `il mio nome è: ${fullName}` : '',
-    email ? `e questa è la mia Email con cui mi sono registrato: ${email}` : '',
-  ].filter(Boolean).join('\n');
-
-  const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+  const message = encodeURIComponent('Ciao, ho bisogno di aiuto con OrientaSchool!');
+  const url = `https://wa.me/${phone}?text=${message}`;
 
   return (
-    
+    <a
       href={url}
       target="_blank"
       rel="noopener noreferrer"
