@@ -284,6 +284,21 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
           </div>
         </div>
 
+                {/* Alert 1 sola scuola */}
+        {schools.length === 1 && !alertDismissed && (
+          <div className="mb-6 flex items-start gap-3 rounded-xl bg-amber-50 border border-amber-200 px-4 py-3">
+            <span className="text-amber-500 text-lg flex-shrink-0">⚠️</span>
+            <p className="text-sm text-amber-700 flex-1">
+              Inserisci almeno una seconda scuola se vuoi fare il confronto.
+            </p>
+            <button
+              onClick={() => setAlertDismissed(true)}
+              className="flex-shrink-0 text-amber-400 hover:text-amber-600 transition-colors"
+            >
+              ✕
+            </button>
+          </div>
+        )}
         {/* Schools section */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
