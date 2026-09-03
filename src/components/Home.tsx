@@ -176,7 +176,9 @@ export function Home({ onOpenAnalysis, onOpenSettings }: HomeProps) {
       <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/80 backdrop-blur-xl">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
-            <Logo size="sm" />
+                   <button onClick={() => window.location.reload()} title="Ricarica">
+              <Logo size="sm" />
+            </button>
             <div className="flex items-center gap-3">
                           <WhatsAppButton fullName={fullName} email={displayEmail} />
               <Button variant="ghost" size="sm" onClick={onOpenSettings} title="Impostazioni">
