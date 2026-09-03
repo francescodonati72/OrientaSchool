@@ -178,7 +178,7 @@ export function Home({ onOpenAnalysis, onOpenSettings }: HomeProps) {
           <div className="flex h-16 items-center justify-between">
             <Logo size="sm" />
             <div className="flex items-center gap-3">
-              <WhatsAppButton />
+                          <WhatsAppButton fullName={fullName} email={displayEmail} />
               <Button variant="ghost" size="sm" onClick={onOpenSettings} title="Impostazioni">
                 <SettingsIcon className="h-4 w-4" />
                 <span className="hidden sm:inline">Impostazioni</span>
