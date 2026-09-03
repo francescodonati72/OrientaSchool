@@ -30,21 +30,19 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  // School modals
   const [addSchoolOpen, setAddSchoolOpen] = useState(false);
   const [editSchool, setEditSchool] = useState<School | null>(null);
   const [deleteSchool, setDeleteSchool] = useState<School | null>(null);
   const [menuOpenId, setMenuOpenId] = useState<string | null>(null);
 
-  // Form state
   const [schoolName, setSchoolName] = useState('');
   const [schoolLocation, setSchoolLocation] = useState('');
   const [editName, setEditName] = useState('');
   const [editLocation, setEditLocation] = useState('');
   const [formError, setFormError] = useState<string | null>(null);
   const [actionLoading, setActionLoading] = useState(false);
+  const [alertDismissed, setAlertDismissed] = useState(false);
 
-  // Debounced save for matrix changes
   const pendingDataRef = useRef<AnalysisData | null>(null);
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -60,7 +58,6 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
       .select('*')
       .eq('id', analysisId)
       .maybeSingle();
-
     if (error) {
       console.error('Error fetching analysis:', error.message);
     } else if (data) {
@@ -69,9 +66,7 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
     setLoading(false);
   }, [analysisId]);
 
-  useEffect(() => {
-    fetchAnalysis();
-  }, [fetchAnalysis]);
+  useEffect(() => { fetchAnalysis(); }, [fetchAnalysis]);
 
   useEffect(() => {
     const handleClick = () => setMenuOpenId(null);
@@ -81,17 +76,11 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
     }
   }, [menuOpenId]);
 
-  // Cleanup pending save on unmount
   useEffect(() => {
-    return () => {
-      if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
-    };
+    return () => { if (saveTimerRef.current) clearTimeout(saveTimerRef.current); };
   }, []);
 
-  const getData = (): AnalysisData => {
-    return (analysis?.data as AnalysisData) ?? {};
-  };
-
+  const getData = (): AnalysisData => (analysis?.data as AnalysisData) ?? {};
   const getSchools = (): School[] => getData().schools ?? [];
 
   const saveData = useCallback(async (newData: AnalysisData) => {
@@ -109,10 +98,7 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
   }, [analysisId]);
 
   const saveDataImmediate = useCallback(async (newData: AnalysisData) => {
-    if (saveTimerRef.current) {
-      clearTimeout(saveTimerRef.current);
-      saveTimerRef.current = null;
-    }
+    if (saveTimerRef.current) { clearTimeout(saveTimerRef.current); saveTimerRef.current = null; }
     pendingDataRef.current = null;
     await saveData(newData);
   }, [saveData]);
@@ -122,10 +108,7 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
     setAnalysis((prev) => prev ? { ...prev, data: newData } : prev);
     if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
     saveTimerRef.current = setTimeout(async () => {
-      if (pendingDataRef.current) {
-        await saveData(pendingDataRef.current);
-        pendingDataRef.current = null;
-      }
+      if (pendingDataRef.current) { await saveData(pendingDataRef.current); pendingDataRef.current = null; }
       saveTimerRef.current = null;
     }, 800);
   }, [saveData]);
@@ -134,11 +117,7 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
     const data = getData();
     const grades = { ...data.grades };
     if (!grades[schoolId]) grades[schoolId] = {};
-    if (value === null) {
-      delete grades[schoolId][paramId];
-    } else {
-      grades[schoolId][paramId] = value;
-    }
+    if (value === null) { delete grades[schoolId][paramId]; } else { grades[schoolId][paramId] = value; }
     scheduleSave({ ...data, grades });
   };
 
@@ -146,84 +125,51 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
     const data = getData();
     const notes = { ...data.notes };
     if (!notes[schoolId]) notes[schoolId] = {};
-    if (value === '') {
-      delete notes[schoolId][paramId];
-    } else {
-      notes[schoolId][paramId] = value;
-    }
+    if (value === '') { delete notes[schoolId][paramId]; } else { notes[schoolId][paramId] = value; }
     scheduleSave({ ...data, notes });
   };
 
   const handleAddSchool = async () => {
-    if (!schoolName.trim()) {
-      setFormError('Inserisci il nome della scuola');
-      return;
-    }
-    setActionLoading(true);
-    setFormError(null);
-    const schools = getSchools();
-    const newSchool: School = {
-      id: crypto.randomUUID(),
-      name: schoolName.trim(),
-      location: schoolLocation.trim(),
-    };
-    const newData: AnalysisData = { ...getData(), schools: [...schools, newSchool] };
-    await saveDataImmediate(newData);
-    setAddSchoolOpen(false);
-    setSchoolName('');
-    setSchoolLocation('');
-    setActionLoading(false);
+    if (!schoolName.trim()) { setFormError('Inserisci il nome della scuola'); return; }
+    setActionLoading(true); setFormError(null);
+    const newSchool: School = { id: crypto.randomUUID(), name: schoolName.trim(), location: schoolLocation.trim() };
+    await saveDataImmediate({ ...getData(), schools: [...getSchools(), newSchool] });
+    setAddSchoolOpen(false); setSchoolName(''); setSchoolLocation(''); setActionLoading(false);
   };
 
   const handleEditSchool = async () => {
-    if (!editSchool || !editName.trim()) {
-      setFormError('Inserisci il nome della scuola');
-      return;
-    }
-    setActionLoading(true);
-    setFormError(null);
-    const schools = getSchools().map((s) =>
-      s.id === editSchool.id ? { ...s, name: editName.trim(), location: editLocation.trim() } : s
-    );
-    const newData: AnalysisData = { ...getData(), schools };
-    await saveDataImmediate(newData);
-    setEditSchool(null);
-    setActionLoading(false);
+    if (!editSchool || !editName.trim()) { setFormError('Inserisci il nome della scuola'); return; }
+    setActionLoading(true); setFormError(null);
+    const schools = getSchools().map((s) => s.id === editSchool.id ? { ...s, name: editName.trim(), location: editLocation.trim() } : s);
+    await saveDataImmediate({ ...getData(), schools });
+    setEditSchool(null); setActionLoading(false);
   };
 
   const handleDeleteSchool = async () => {
     if (!deleteSchool) return;
-    setActionLoading(true);
-    setFormError(null);
+    setActionLoading(true); setFormError(null);
     const schools = getSchools().filter((s) => s.id !== deleteSchool.id);
     const grades = { ...getData().grades };
     const notes = { ...getData().notes };
-    delete grades[deleteSchool.id];
-    delete notes[deleteSchool.id];
-    const newData: AnalysisData = { ...getData(), schools, grades, notes };
-    await saveDataImmediate(newData);
-    setDeleteSchool(null);
-    setActionLoading(false);
+    delete grades[deleteSchool.id]; delete notes[deleteSchool.id];
+    await saveDataImmediate({ ...getData(), schools, grades, notes });
+    setDeleteSchool(null); setActionLoading(false);
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <Loader2 className="h-8 w-8 animate-spin text-brand-500" />
-      </div>
-    );
-  }
+  if (loading) return (
+    <div className="min-h-screen flex items-center justify-center bg-slate-50">
+      <Loader2 className="h-8 w-8 animate-spin text-brand-500" />
+    </div>
+  );
 
-  if (!analysis) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <div className="text-center">
-          <p className="text-slate-500 mb-4">Analisi non trovata</p>
-          <Button onClick={onBack}>Torna alle analisi</Button>
-        </div>
+  if (!analysis) return (
+    <div className="min-h-screen flex items-center justify-center bg-slate-50">
+      <div className="text-center">
+        <p className="text-slate-500 mb-4">Analisi non trovata</p>
+        <Button onClick={onBack}>Torna alle analisi</Button>
       </div>
-    );
-  }
+    </div>
+  );
 
   const schools = getSchools();
   const data = getData();
@@ -241,10 +187,12 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
               >
                 <ArrowLeft className="h-5 w-5" />
               </button>
-              <Logo size="sm" />
+              <button onClick={onBack} title="Torna alla Home">
+                <Logo size="sm" />
+              </button>
             </div>
             <div className="flex items-center gap-3">
-              <WhatsAppButton />
+              <WhatsAppButton fullName={fullName} email={displayEmail} />
               <Button variant="ghost" size="sm" onClick={onOpenDashboard} title="Dashboard">
                 <BarChart3 className="h-4 w-4" />
                 <span className="hidden sm:inline">Dashboard</span>
@@ -282,6 +230,22 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
             )}
           </div>
         </div>
+
+        {/* Alert 1 sola scuola */}
+        {schools.length === 1 && !alertDismissed && (
+          <div className="mb-6 flex items-start gap-3 rounded-xl bg-amber-50 border border-amber-200 px-4 py-3">
+            <span className="text-amber-500 text-lg flex-shrink-0">⚠️</span>
+            <p className="text-sm text-amber-700 flex-1">
+              Inserisci almeno una seconda scuola se vuoi fare il confronto.
+            </p>
+            <button
+              onClick={() => setAlertDismissed(true)}
+              className="flex-shrink-0 text-amber-400 hover:text-amber-600 transition-colors"
+            >
+              ✕
+            </button>
+          </div>
+        )}
 
         {/* Schools section */}
         <div className="mb-8">
@@ -328,13 +292,7 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
                       {menuOpenId === school.id && (
                         <div className="absolute right-0 top-full mt-1 w-36 rounded-xl border border-slate-200 bg-white shadow-lg z-20 animate-scale-in py-1">
                           <button
-                            onClick={() => {
-                              setEditName(school.name);
-                              setEditLocation(school.location);
-                              setEditSchool(school);
-                              setFormError(null);
-                              setMenuOpenId(null);
-                            }}
+                            onClick={() => { setEditName(school.name); setEditLocation(school.location); setEditSchool(school); setFormError(null); setMenuOpenId(null); }}
                             className="flex w-full items-center gap-2 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
                           >
                             <Pencil className="h-4 w-4 text-slate-400" />
@@ -390,23 +348,17 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
               />
             </div>
 
-            {/* Legend */}
-            <div className="mt-4 flex flex-wrap items-center gap-4 text-xs">
-              <span className="flex items-center gap-1.5">
-                <span className="h-3 w-3 rounded bg-error-500" />
-                <span className="text-slate-600">1–5 Critico</span>
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="h-3 w-3 rounded bg-amber-500" />
-                <span className="text-slate-600">6–7 Medio</span>
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="h-3 w-3 rounded bg-success-500" />
-                <span className="text-slate-600">8–10 Ottimo</span>
-              </span>
-            </div>
-            <div className="mt-6 flex justify-center">
-              <WhatsAppButton />
+            <div className="mt-6">
+              <p className="text-sm text-slate-500 text-center mb-3">
+                Quando hai finito, clicca qui per vedere i risultati dell'analisi nella Dashboard
+              </p>
+              <div className="flex items-center justify-center gap-3">
+                <Button onClick={onOpenDashboard}>
+                  <BarChart3 className="h-4 w-4" />
+                  Vai alla Dashboard
+                </Button>
+                <WhatsAppButton fullName={fullName} email={displayEmail} />
+              </div>
             </div>
           </div>
         )}
@@ -415,20 +367,8 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
       {/* Add School Modal */}
       <Modal open={addSchoolOpen} onClose={() => setAddSchoolOpen(false)} title="Aggiungi Scuola">
         <div className="space-y-4">
-          <Input
-            label="Nome Scuola"
-            placeholder="es. TURISTICO"
-            value={schoolName}
-            onChange={(e) => setSchoolName(e.target.value)}
-            error={formError}
-            autoFocus
-          />
-          <Input
-            label="Luogo / Città"
-            placeholder="es. Vittorio Veneto"
-            value={schoolLocation}
-            onChange={(e) => setSchoolLocation(e.target.value)}
-          />
+          <Input label="Nome Scuola" placeholder="es. TURISTICO" value={schoolName} onChange={(e) => setSchoolName(e.target.value)} error={formError} autoFocus />
+          <Input label="Luogo / Città" placeholder="es. Vittorio Veneto" value={schoolLocation} onChange={(e) => setSchoolLocation(e.target.value)} />
           <div className="flex gap-3 justify-end">
             <Button variant="secondary" onClick={() => setAddSchoolOpen(false)}>Annulla</Button>
             <Button onClick={handleAddSchool} loading={actionLoading}>Aggiungi</Button>
@@ -439,18 +379,8 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
       {/* Edit School Modal */}
       <Modal open={!!editSchool} onClose={() => setEditSchool(null)} title="Modifica Scuola">
         <div className="space-y-4">
-          <Input
-            label="Nome Scuola"
-            value={editName}
-            onChange={(e) => setEditName(e.target.value)}
-            error={formError}
-            autoFocus
-          />
-          <Input
-            label="Luogo / Città"
-            value={editLocation}
-            onChange={(e) => setEditLocation(e.target.value)}
-          />
+          <Input label="Nome Scuola" value={editName} onChange={(e) => setEditName(e.target.value)} error={formError} autoFocus />
+          <Input label="Luogo / Città" value={editLocation} onChange={(e) => setEditLocation(e.target.value)} />
           <div className="flex gap-3 justify-end">
             <Button variant="secondary" onClick={() => setEditSchool(null)}>Annulla</Button>
             <Button onClick={handleEditSchool} loading={actionLoading}>Salva</Button>
@@ -464,9 +394,7 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
           <div className="flex items-start gap-3 rounded-xl bg-error-50 border border-error-200 p-4">
             <AlertTriangle className="h-5 w-5 text-error-600 flex-shrink-0 mt-0.5" />
             <div>
-              <p className="text-sm font-medium text-error-800">
-                Eliminare questa scuola dall'analisi?
-              </p>
+              <p className="text-sm font-medium text-error-800">Eliminare questa scuola dall'analisi?</p>
               <p className="text-sm text-error-600 mt-1">
                 La scuola <span className="font-medium">"{deleteSchool?.name}"</span> e tutti i relativi voti e note verranno rimossi da questa analisi.
               </p>
