@@ -67,12 +67,7 @@ export function ParameterBarChart({ labels, series1, series2, label1, label2, ma
         <span className="flex items-center gap-1.5">
           <span className="h-3 w-3 rounded-sm" style={{ backgroundColor: '#38bdf8' }} />
           {label2}
-        </span>
-        <span className="flex items-center gap-1.5">
-          <span style={{ background: '#fee2e2', padding: '1px 6px', borderRadius: '3px', fontSize: '10px', color: '#991b1b' }}>1–5</span>
-          <span style={{ background: '#fef9c3', padding: '1px 6px', borderRadius: '3px', fontSize: '10px', color: '#854d0e' }}>6–7</span>
-          <span style={{ background: '#dcfce7', padding: '1px 6px', borderRadius: '3px', fontSize: '10px', color: '#166534' }}>8–10</span>
-        </span>
+       
       </div>
     </div>
   );
