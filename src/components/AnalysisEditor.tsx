@@ -43,7 +43,6 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
   const [editLocation, setEditLocation] = useState('');
   const [formError, setFormError] = useState<string | null>(null);
   const [actionLoading, setActionLoading] = useState(false);
-  const [alertDismissed, setAlertDismissed] = useState(false);
 
   // Debounced save for matrix changes
   const pendingDataRef = useRef<AnalysisData | null>(null);
@@ -242,12 +241,10 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
               >
                 <ArrowLeft className="h-5 w-5" />
               </button>
-                         <button onClick={onBack} title="Torna alla Home">
-                <Logo size="sm" />
-              </button>
+              <Logo size="sm" />
             </div>
             <div className="flex items-center gap-3">
-                           <WhatsAppButton fullName={fullName} email={displayEmail} />
+              <WhatsAppButton />
               <Button variant="ghost" size="sm" onClick={onOpenDashboard} title="Dashboard">
                 <BarChart3 className="h-4 w-4" />
                 <span className="hidden sm:inline">Dashboard</span>
@@ -286,27 +283,12 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
           </div>
         </div>
 
-                {/* Alert 1 sola scuola */}
-        {schools.length === 1 && !alertDismissed && (
-          <div className="mb-6 flex items-start gap-3 rounded-xl bg-amber-50 border border-amber-200 px-4 py-3">
-            <span className="text-amber-500 text-lg flex-shrink-0">⚠️</span>
-            <p className="text-sm text-amber-700 flex-1">
-              Inserisci almeno una seconda scuola se vuoi fare il confronto.
-            </p>
-            <button
-              onClick={() => setAlertDismissed(true)}
-              className="flex-shrink-0 text-amber-400 hover:text-amber-600 transition-colors"
-            >
-              ✕
-            </button>
-          </div>
-        )}
         {/* Schools section */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="text-xl font-semibold text-slate-800">Scuole</h2>
-              <p className="text-sm text-slate-500">Inserisci minimo 2 scuole per fare il confronto nell'analisi corrente</p>
+              <p className="text-sm text-slate-500">Colonne dell'analisi corrente</p>
             </div>
             <Button onClick={() => { setSchoolName(''); setSchoolLocation(''); setFormError(null); setAddSchoolOpen(true); }}>
               <Plus className="h-4 w-4" />
@@ -390,7 +372,7 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
               <div>
                 <div className="flex items-center gap-2">
                   <TableIcon className="h-5 w-5 text-brand-600" />
-                  <h2 className="text-xl font-semibold text-slate-800">Matrice di Valutazione e Confronto (min. 2 scuole) </h2>
+                  <h2 className="text-xl font-semibold text-slate-800">Matrice di Valutazione</h2>
                 </div>
                 <p className="text-sm text-slate-500">
                   Righe: parametri · Colonne: scuole · Voti da 1 a 10
@@ -409,18 +391,22 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
             </div>
 
             {/* Legend */}
-            
-            <div className="mt-6">
-              <p className="text-sm text-slate-500 text-center mb-3">
-                Quando hai finito, clicca qui per vedere i risultati dell'analisi nella Dashboard
-              </p>
-              <div className="flex items-center justify-center gap-3">
-                <Button onClick={onOpenDashboard}>
-                  <BarChart3 className="h-4 w-4" />
-                  Vai alla Dashboard
-                </Button>
-                           <WhatsAppButton fullName={fullName} email={displayEmail} />
-              </div>
+            <div className="mt-4 flex flex-wrap items-center gap-4 text-xs">
+              <span className="flex items-center gap-1.5">
+                <span className="h-3 w-3 rounded bg-error-500" />
+                <span className="text-slate-600">1–5 Critico</span>
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="h-3 w-3 rounded bg-amber-500" />
+                <span className="text-slate-600">6–7 Medio</span>
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="h-3 w-3 rounded bg-success-500" />
+                <span className="text-slate-600">8–10 Ottimo</span>
+              </span>
+            </div>
+            <div className="mt-6 flex justify-center">
+              <WhatsAppButton />
             </div>
           </div>
         )}

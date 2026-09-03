@@ -176,11 +176,9 @@ export function Home({ onOpenAnalysis, onOpenSettings }: HomeProps) {
       <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/80 backdrop-blur-xl">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
-                   <button onClick={() => window.location.reload()} title="Ricarica">
-              <Logo size="sm" />
-            </button>
+            <Logo size="sm" />
             <div className="flex items-center gap-3">
-                          <WhatsAppButton fullName={fullName} email={displayEmail} />
+              <WhatsAppButton />
               <Button variant="ghost" size="sm" onClick={onOpenSettings} title="Impostazioni">
                 <SettingsIcon className="h-4 w-4" />
                 <span className="hidden sm:inline">Impostazioni</span>
@@ -206,7 +204,7 @@ export function Home({ onOpenAnalysis, onOpenSettings }: HomeProps) {
           <div>
             <h1 className="text-3xl font-bold text-slate-800 mb-1">Le mie analisi</h1>
             <p className="text-sm text-slate-500">
-              Crea una analisi di orientamento, poi selezionala per entrare.
+              Gestisci le tue analisi di orientamento scolastico
             </p>
           </div>
           <Button onClick={() => { setNewName(''); setFormError(null); setCreateOpen(true); }}>
@@ -286,15 +284,15 @@ export function Home({ onOpenAnalysis, onOpenSettings }: HomeProps) {
             <ol className="space-y-4">
               <li className="text-sm text-slate-600">
                 <p className="font-semibold text-slate-800 mb-1">1. Clicca "Crea Nuova Analisi" in alto a destra:</p>
-                <p>dai un nome alla tua analisi (es. "Scuola Superiore", oppure "Scuola di tennis" ecc. in base a quello che stai cercando di analizzare). Poi seleziona l'analisi per entrare.</p>
+                <p>dai un nome alla tua analisi (es. "Scuola Superiore", oppure "Scuola di tennis" ecc. in base a quello che stai cercando di analizzare)</p>
               </li>
               <li className="text-sm text-slate-600">
-                <p className="font-semibold text-slate-800 mb-1">2. Dentro l'analisi, Aggiungi almeno 2 (o più) opzioni/scuole che vuoi confrontare:</p>
-                <p>ogni scuola che hai aggiunto è una colonna della matrice, nelle righe della matrice hai i parametri di valutazione: inserisci la valutazione di ogni parametro con un voto da 1 a 10 PPI (Personal Perceived Index - il tuo indice di percezione personale); puoi anche aggiungere delle note in ogni cella della matrice. Procedi finché hai completato tutti i parametri, per ogni scuola.</p>
+                <p className="font-semibold text-slate-800 mb-1">2. Aggiungi almeno 2 (o più) scuole che vuoi confrontare:</p>
+                <p>per ogni scuola che aggiungi, vai a inserire la valutazione di ogni parametro inserendo un voto (da 1 a 10) e se vuoi anche delle note. Procedi finché hai completato tutti i parametri, per ogni scuola.</p>
               </li>
               <li className="text-sm text-slate-600">
                 <p className="font-semibold text-slate-800 mb-1">3. Quando hai finito, vai nella Dashboard (icona in alto):</p>
-                <p>qui puoi vedere i grafici finali, confrontare le scuole 2 alla volta, e avere uno schema chiaro che ti sarà di aiuto nell'orientamento alla scelta.</p>
+                <p>qui puoi vedere i grafici finali, confrontare le scuole 2 alla volta, e avere un aiuto nell'orientamento alla scelta.</p>
               </li>
             </ol>
             <p className="mt-4 text-xs text-slate-500 border-t border-slate-100 pt-4">
@@ -457,15 +455,7 @@ function AnalysisCard({
         </div>
       </div>
 
-      <div className="flex items-start justify-between mb-1">
-        <h3 className="text-base font-semibold text-slate-800 line-clamp-2">{analysis.name}</h3>
-        <button
-          onClick={onOpen}
-          className="flex-shrink-0 ml-2 flex items-center gap-1 rounded-lg bg-brand-50 border border-brand-200 px-3 py-1.5 text-xs font-medium text-brand-600 hover:bg-brand-100 transition-colors"
-        >
-          Accedi →
-        </button>
-      </div>
+      <h3 className="text-base font-semibold text-slate-800 mb-1 line-clamp-2">{analysis.name}</h3>
       <p className="text-xs text-slate-400 mb-4">
         Creata il {formatDate(analysis.created_at)}
       </p>
