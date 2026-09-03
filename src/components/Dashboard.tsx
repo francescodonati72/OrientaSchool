@@ -387,7 +387,7 @@ export function Dashboard({ analysisId, onBack, onOpenSettings }: DashboardProps
             </div>
           </div>
 
-          <div style={{ border: '1px solid #e2e8f0', borderRadius: '12px', padding: '16px', backgroundColor: 'white', marginBottom: '20px' }}>
+          <div style={{ pageBreakBefore: 'always', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '16px', backgroundColor: 'white', marginBottom: '20px' }}>
             <h3 style={{ fontSize: '13px', fontWeight: '600', margin: '0 0 4px' }}>Dettaglio Parametro per Parametro</h3>
             <p style={{ fontSize: '11px', color: '#94a3b8', margin: '0 0 12px' }}>Confronto affiancato dei voti (1–10) su ciascun parametro</p>
             <ParameterBarChart labels={parameters.map((p) => p.title)} series1={parameters.map((p) => compA.paramGrades[p.id] ?? 0)} series2={parameters.map((p) => compB.paramGrades[p.id] ?? 0)} label1={compA.school.name} label2={compB.school.name} max={10} />
