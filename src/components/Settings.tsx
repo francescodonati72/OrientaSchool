@@ -154,7 +154,7 @@ export function Settings({ onBack }: SettingsProps) {
           <div className="flex h-16 items-center justify-between">
             <Logo size="sm" />
             <div className="flex items-center gap-3">
-              <WhatsAppButton />
+              <WhatsAppButton fullName={fullName} email={displayEmail} />
               <div className="hidden sm:flex flex-col items-end leading-tight">
                 <span className="text-sm font-medium text-slate-700">{fullName || 'Utente'}</span>
                 <span className="text-xs text-slate-400">{displayEmail}</span>
