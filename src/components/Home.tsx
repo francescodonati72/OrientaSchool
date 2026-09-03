@@ -204,7 +204,7 @@ export function Home({ onOpenAnalysis, onOpenSettings }: HomeProps) {
           <div>
             <h1 className="text-3xl font-bold text-slate-800 mb-1">Le mie analisi</h1>
             <p className="text-sm text-slate-500">
-              Gestisci le tue analisi di orientamento scolastico
+              Crea una analisi di orientamento, poi selezionala per entrare.
             </p>
           </div>
           <Button onClick={() => { setNewName(''); setFormError(null); setCreateOpen(true); }}>
