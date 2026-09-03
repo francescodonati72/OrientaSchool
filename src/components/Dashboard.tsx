@@ -117,7 +117,7 @@ export function Dashboard({ analysisId, onBack, onOpenSettings }: DashboardProps
               </button>
             </div>
             <div className="flex items-center gap-3">
-              <WhatsAppButton />
+                        <WhatsAppButton fullName={fullName} email={displayEmail} />
               {compA && compB && (
                 <Button variant="ghost" size="sm" onClick={handlePrint} title="Stampa / Salva PDF">
                   <Printer className="h-4 w-4" />
@@ -233,7 +233,7 @@ export function Dashboard({ analysisId, onBack, onOpenSettings }: DashboardProps
           </>
         )}
         <div className="flex justify-center mt-6 mb-4">
-          <WhatsAppButton />
+                      <WhatsAppButton fullName={fullName} email={displayEmail} />
         </div>
       </main>
 
