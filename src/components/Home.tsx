@@ -284,15 +284,15 @@ export function Home({ onOpenAnalysis, onOpenSettings }: HomeProps) {
             <ol className="space-y-4">
               <li className="text-sm text-slate-600">
                 <p className="font-semibold text-slate-800 mb-1">1. Clicca "Crea Nuova Analisi" in alto a destra:</p>
-                <p>dai un nome alla tua analisi (es. "Scuola Superiore", oppure "Scuola di tennis" ecc. in base a quello che stai cercando di analizzare)</p>
+                <p>dai un nome alla tua analisi (es. "Scuola Superiore", oppure "Scuola di tennis" ecc. in base a quello che stai cercando di analizzare). Poi seleziona l'analisi per entrare.</p>
               </li>
               <li className="text-sm text-slate-600">
-                <p className="font-semibold text-slate-800 mb-1">2. Aggiungi almeno 2 (o più) scuole che vuoi confrontare:</p>
-                <p>per ogni scuola che aggiungi, vai a inserire la valutazione di ogni parametro inserendo un voto (da 1 a 10) e se vuoi anche delle note. Procedi finché hai completato tutti i parametri, per ogni scuola.</p>
+                <p className="font-semibold text-slate-800 mb-1">2. Dentro l'analisi, Aggiungi almeno 2 (o più) opzioni/scuole che vuoi confrontare:</p>
+                <p>ogni scuola che hai aggiunto è una colonna della matrice, nelle righe della matrice hai i parametri di valutazione: inserisci la valutazione di ogni parametro con un voto da 1 a 10 PPI (Perconal Perceived Index - il tuo indice di percezione personale); puoi anche aggiungere delle note in ogni cella della matrice. Procedi finché hai completato tutti i parametri, per ogni scuola.</p>
               </li>
               <li className="text-sm text-slate-600">
                 <p className="font-semibold text-slate-800 mb-1">3. Quando hai finito, vai nella Dashboard (icona in alto):</p>
-                <p>qui puoi vedere i grafici finali, confrontare le scuole 2 alla volta, e avere un aiuto nell'orientamento alla scelta.</p>
+                <p>qui puoi vedere i grafici finali, confrontare le scuole 2 alla volta, e avere uno schema chiaro che ti sarà di aiuto nell'orientamento alla scelta.</p>
               </li>
             </ol>
             <p className="mt-4 text-xs text-slate-500 border-t border-slate-100 pt-4">
