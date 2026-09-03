@@ -247,7 +247,7 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
               </button>
             </div>
             <div className="flex items-center gap-3">
-              <WhatsAppButton />
+                           <WhatsAppButton fullName={fullName} email={displayEmail} />
               <Button variant="ghost" size="sm" onClick={onOpenDashboard} title="Dashboard">
                 <BarChart3 className="h-4 w-4" />
                 <span className="hidden sm:inline">Dashboard</span>
@@ -419,7 +419,7 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
                   <BarChart3 className="h-4 w-4" />
                   Vai alla Dashboard
                 </Button>
-                <WhatsAppButton />
+                           <WhatsAppButton fullName={fullName} email={displayEmail} />
               </div>
             </div>
           </div>
