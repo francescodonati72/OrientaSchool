@@ -36,3 +36,44 @@ export function ParameterBarChart({ labels, series1, series2, label1, label2, ma
                         <div className="absolute inset-0" style={{
                           background: 'linear-gradient(to right, #fee2e2 0%, #fee2e2 50%, #fef9c3 50%, #fef9c3 70%, #dcfce7 70%, #dcfce7 100%)'
                         }} />
+                        <div className="absolute top-0 left-0 h-full rounded" style={{ width: pct(v1), background: 'rgba(129,140,248,0.9)' }} />
+                      </div>
+                      <span className="text-[11px] font-semibold text-right" style={{ minWidth: '16px', color: '#4338ca' }}>{v1 || '–'}</span>
+                    </div>
+                    {/* Barra scuola B */}
+                    <div className="flex items-center gap-2">
+                      <div className="relative flex-1 rounded overflow-hidden" style={{ height: '12px' }}>
+                        <div className="absolute inset-0" style={{
+                          background: 'linear-gradient(to right, #fee2e2 0%, #fee2e2 50%, #fef9c3 50%, #fef9c3 70%, #dcfce7 70%, #dcfce7 100%)'
+                        }} />
+                        <div className="absolute top-0 left-0 h-full rounded" style={{ width: pct(v2), background: 'rgba(56,189,248,0.9)' }} />
+                      </div>
+                      <span className="text-[11px] font-semibold text-right" style={{ minWidth: '16px', color: '#0284c7' }}>{v2 || '–'}</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+
+      {/* Legenda */}
+      <div className="flex items-center gap-4 mt-3 text-xs text-slate-500 flex-wrap">
+        <span className="flex items-center gap-1.5">
+          <span className="h-3 w-3 rounded-sm" style={{ backgroundColor: '#818cf8' }} />
+          {label1}
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span className="h-3 w-3 rounded-sm" style={{ backgroundColor: '#38bdf8' }} />
+          {label2}
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span style={{ background: '#fee2e2', padding: '1px 6px', borderRadius: '3px', fontSize: '10px', color: '#991b1b' }}>1–5</span>
+          <span style={{ background: '#fef9c3', padding: '1px 6px', borderRadius: '3px', fontSize: '10px', color: '#854d0e' }}>6–7</span>
+          <span style={{ background: '#dcfce7', padding: '1px 6px', borderRadius: '3px', fontSize: '10px', color: '#166534' }}>8–10</span>
+        </span>
+      </div>
+    </div>
+  );
+}
