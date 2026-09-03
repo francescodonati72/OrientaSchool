@@ -422,6 +422,11 @@ export function Dashboard({ analysisId, onBack, onOpenSettings }: DashboardProps
                   <strong>Consiglio: </strong>{aiEval.recommendation}
                 </p>
               </div>
+              <div style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '12px', marginTop: '12px', textAlign: 'center' }}>
+                <p style={{ fontSize: '11px', color: '#475569', margin: '0', lineHeight: '1.6' }}>
+                  Se vuoi approfondire, o se vuoi un ulteriore aiuto per chiarire qual'è la scelta che per te oggi è più utile, chiedi supporto al coach: clicca il bottone verde qui sotto.
+                </p>
+              </div>
             </div>
           )}
         </div>
