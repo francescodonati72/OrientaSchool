@@ -379,7 +379,7 @@ export function Dashboard({ analysisId, onBack, onOpenSettings }: DashboardProps
             ))}
           </div>
 
-          <div style={{ border: '1px solid #e2e8f0', borderRadius: '12px', padding: '16px', backgroundColor: 'white', marginBottom: '20px' }}>
+          <div style={{ pageBreakBefore: 'always', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '16px', backgroundColor: 'white', marginBottom: '20px' }}>
             <h3 style={{ fontSize: '13px', fontWeight: '600', margin: '0 0 4px' }}>Confronto Radar</h3>
             <p style={{ fontSize: '11px', color: '#94a3b8', margin: '0 0 12px' }}>Voti per parametro (1–10) delle due scuole a confronto</p>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
