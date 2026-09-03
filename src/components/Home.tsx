@@ -455,7 +455,15 @@ function AnalysisCard({
         </div>
       </div>
 
-      <h3 className="text-base font-semibold text-slate-800 mb-1 line-clamp-2">{analysis.name}</h3>
+      <div className="flex items-start justify-between mb-1">
+        <h3 className="text-base font-semibold text-slate-800 line-clamp-2">{analysis.name}</h3>
+        <button
+          onClick={onOpen}
+          className="flex-shrink-0 ml-2 flex items-center gap-1 rounded-lg bg-brand-50 border border-brand-200 px-3 py-1.5 text-xs font-medium text-brand-600 hover:bg-brand-100 transition-colors"
+        >
+          Accedi →
+        </button>
+      </div>
       <p className="text-xs text-slate-400 mb-4">
         Creata il {formatDate(analysis.created_at)}
       </p>

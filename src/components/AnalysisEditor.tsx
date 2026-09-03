@@ -43,6 +43,7 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
   const [editLocation, setEditLocation] = useState('');
   const [formError, setFormError] = useState<string | null>(null);
   const [actionLoading, setActionLoading] = useState(false);
+  const [alertDismissed, setAlertDismissed] = useState(false);
 
   // Debounced save for matrix changes
   const pendingDataRef = useRef<AnalysisData | null>(null);
