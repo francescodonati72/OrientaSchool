@@ -74,3 +74,11 @@
     border-radius: 9999px;
   }
 }
+@media print {
+  .no-print { display: none !important; }
+  .print-only { display: block !important; }
+  .print-page-break { page-break-before: always; break-before: page; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  body { background: white !important; }
+  @page { margin: 1.5cm; }
+}
