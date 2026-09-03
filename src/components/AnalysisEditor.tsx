@@ -242,7 +242,9 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
               >
                 <ArrowLeft className="h-5 w-5" />
               </button>
-              <Logo size="sm" />
+                         <button onClick={onBack} title="Torna alla Home">
+                <Logo size="sm" />
+              </button>
             </div>
             <div className="flex items-center gap-3">
               <WhatsAppButton />
