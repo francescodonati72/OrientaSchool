@@ -33,7 +33,4 @@ export function ParameterBarChart({ labels, series1, series2, label1, label2, ma
                     {/* Barra scuola A */}
                     <div className="flex items-center gap-2">
                       <div className="relative flex-1 rounded overflow-hidden" style={{ height: '12px' }}>
-                        <div className="absolute inset-0 flex">
-                          <div style={{ width: '50%', background: '#fee2e2' }} />
-                          <div style={{ width: '20%', background: '#fef9c3' }} />
-                          <div style={{ width: '30%', background: '#dcfce7' }} />
+                        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, #fee2e2 0%, #fee2e2 50%, #fef9c3 50%, #fef9c3 70%, #dcfce7 70%, #dcfce7 100%)' }} />
