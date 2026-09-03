@@ -394,7 +394,7 @@ export function Dashboard({ analysisId, onBack, onOpenSettings }: DashboardProps
           </div>
 
           {aiEval && (
-            <div style={{ border: '1px solid #e2e8f0', borderRadius: '12px', padding: '16px', backgroundColor: '#fafafa' }}>
+            <div style={{ pageBreakBefore: 'always', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '16px', backgroundColor: '#fafafa' }}>
               <h3 style={{ fontSize: '13px', fontWeight: '600', margin: '0 0 12px' }}>Considerazioni Finali</h3>
               {aiEval.winner && (
                 <div style={{ backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '8px', padding: '10px', marginBottom: '12px' }}>
