@@ -392,8 +392,17 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
 
             {/* Legend */}
             
-            <div className="mt-6 flex justify-center">
-              <WhatsAppButton />
+            <div className="mt-6">
+              <p className="text-sm text-slate-500 text-center mb-3">
+                Quando hai finito, clicca qui per vedere i risultati dell'analisi nella Dashboard
+              </p>
+              <div className="flex items-center justify-center gap-3">
+                <Button onClick={onOpenDashboard}>
+                  <BarChart3 className="h-4 w-4" />
+                  Vai alla Dashboard
+                </Button>
+                <WhatsAppButton />
+              </div>
             </div>
           </div>
         )}
