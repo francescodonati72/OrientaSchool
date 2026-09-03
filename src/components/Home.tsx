@@ -288,7 +288,7 @@ export function Home({ onOpenAnalysis, onOpenSettings }: HomeProps) {
               </li>
               <li className="text-sm text-slate-600">
                 <p className="font-semibold text-slate-800 mb-1">2. Dentro l'analisi, Aggiungi almeno 2 (o più) opzioni/scuole che vuoi confrontare:</p>
-                <p>ogni scuola che hai aggiunto è una colonna della matrice, nelle righe della matrice hai i parametri di valutazione: inserisci la valutazione di ogni parametro con un voto da 1 a 10 PPI (Perconal Perceived Index - il tuo indice di percezione personale); puoi anche aggiungere delle note in ogni cella della matrice. Procedi finché hai completato tutti i parametri, per ogni scuola.</p>
+                <p>ogni scuola che hai aggiunto è una colonna della matrice, nelle righe della matrice hai i parametri di valutazione: inserisci la valutazione di ogni parametro con un voto da 1 a 10 PPI (Personal Perceived Index - il tuo indice di percezione personale); puoi anche aggiungere delle note in ogni cella della matrice. Procedi finché hai completato tutti i parametri, per ogni scuola.</p>
               </li>
               <li className="text-sm text-slate-600">
                 <p className="font-semibold text-slate-800 mb-1">3. Quando hai finito, vai nella Dashboard (icona in alto):</p>
