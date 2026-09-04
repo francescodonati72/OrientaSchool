@@ -333,7 +333,7 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
                   <h2 className="text-xl font-semibold text-slate-800">Matrice di Valutazione e Confronto (min. 2 scuole)</h2>
                 </div>
                 <p className="text-sm text-slate-500">
-                  Inserisci la tua personale valutazione di ogni parametro inserendo un voto da 1 a 10 PPI (Personal Perceived Index). Se vuoi, puoi anche aggiungere delle note in ogni cella.
+                  Indica la tua personale valutazione di ogni parametro inserendo un voto da 1 a 10 PPI (Personal Perceived Index). Se vuoi, puoi anche aggiungere delle note in ogni cella.
                 </p>
               </div>
             </div>
