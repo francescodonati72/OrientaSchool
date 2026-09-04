@@ -93,7 +93,7 @@ export function Dashboard({ analysisId, onBack, onOpenSettings }: DashboardProps
     <div className="min-h-screen bg-slate-50">
 
       {/* ===== SCHERMO ===== */}
-      <header className="no-print sticky top-0 z-30 border-b border-slate-200 bg-white/80 backdrop-blur-xl">
+      <header className="no-print sticky top-0 z-30 border-b border-slate-200 bg-white/80 backdrop-blur-xl overflow-hidden">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center gap-4">
