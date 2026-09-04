@@ -51,19 +51,19 @@ export function Header({ page, onBack, onHome, onOpenSettings, onOpenDashboard, 
     <>
       <header className="no-print sticky top-0 z-30 border-b border-slate-200 bg-white/80 backdrop-blur-xl">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
+          <div className="flex h-16 items-center justify-between gap-2 min-w-0">
             {/* Left side */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 sm:gap-4 min-w-0">
               {showBack && (
                 <button
                   onClick={onBack}
-                  className="rounded-lg p-1.5 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700"
+                  className="rounded-lg p-1.5 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700 flex-shrink-0"
                   title="Indietro"
                 >
                   <ArrowLeft className="h-5 w-5" />
                 </button>
               )}
-              <button onClick={onHome} title="Vai alla Home">
+              <button onClick={onHome} title="Vai alla Home" className="min-w-0">
                 <Logo size="sm" />
               </button>
             </div>
@@ -99,8 +99,8 @@ export function Header({ page, onBack, onHome, onOpenSettings, onOpenDashboard, 
             </div>
 
             {/* Mobile right side */}
-            <div className="flex sm:hidden items-center gap-2">
-              <WhatsAppButton />
+            <div className="flex sm:hidden items-center gap-2 flex-shrink-0">
+              <WhatsAppButton iconOnly />
               <button
                 onClick={() => setDrawerOpen(true)}
                 className="rounded-lg p-2 text-slate-600 transition-colors hover:bg-slate-100"
