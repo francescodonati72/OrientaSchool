@@ -1,10 +1,24 @@
+import { useAuth } from '@/context/AuthContext';
+
 export function WhatsAppButton() {
+  const { user } = useAuth();
+  
+  const fullName = user
+    ? `${(user.user_metadata?.first_name as string) ?? ''} ${(user.user_metadata?.last_name as string) ?? ''}`.trim()
+    : '';
+  const email = user?.email ?? '';
+
   const phone = '393392323000';
-  const message = encodeURIComponent('Ciao, ho bisogno di aiuto con OrientaSchool!');
-  const url = `https://wa.me/${phone}?text=${message}`;
+  const message = [
+    'Ciao, ho bisogno di aiuto con OrientaSchool.',
+    fullName ? `il mio nome è: ${fullName}` : '',
+    email ? `e questa è la mia Email con cui mi sono registrato: ${email}` : '',
+  ].filter(Boolean).join('\n');
+
+  const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
   return (
-    <a
+    
       href={url}
       target="_blank"
       rel="noopener noreferrer"
