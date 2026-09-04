@@ -171,18 +171,15 @@ export function Header({ page, onBack, onHome, onOpenSettings, onOpenDashboard, 
                   <span className="text-xs text-slate-400 truncate">{displayEmail}</span>
                 </div>
               </div>
-            </nav>
-
-            {/* Drawer footer */}
-            <div className="px-3 py-4 border-t border-slate-100 flex-shrink-0">
+              <div className="my-3 border-t border-slate-100" />
               <button
                 onClick={() => handleDrawerNav(() => signOut())}
-                className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-error-600 hover:bg-error-50 transition-colors"
+                className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors"
               >
                 <LogOut className="h-5 w-5" />
                 Esci
               </button>
-            </div>
+            </nav>
           </div>
         </div>
       )}
