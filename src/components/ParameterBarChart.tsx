@@ -36,7 +36,7 @@ export function ParameterBarChart({ labels, series1, series2, label1, label2, ma
                         <div className="absolute inset-0" style={{
                           background: 'linear-gradient(to right, #fee2e2 0%, #fee2e2 50%, #fef9c3 50%, #fef9c3 70%, #dcfce7 70%, #dcfce7 100%)'
                         }} />
-                        <div className="absolute top-0 left-0 h-full rounded" style={{ width: pct(v1), background: 'rgba(129,140,248,0.9)' }} />
+                        <div className="absolute top-0 left-0 h-full rounded" style={{ width: pct(v2), background: 'rgba(129,140,248,0.9)' }} />
                       </div>
                       <span className="text-[11px] font-semibold text-right" style={{ minWidth: '16px', color: '#4338ca' }}>{v1 || '–'}</span>
                     </div>
