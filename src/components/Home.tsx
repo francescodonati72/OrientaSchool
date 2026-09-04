@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Header } from '@/components/Header';
 import {
   Plus, MoreVertical, Copy, Trash2, Pencil, FileText, Search,
-  FolderOpen, AlertTriangle, X,
+  FolderOpen, AlertTriangle, X, ArrowRight,
 } from 'lucide-react';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
@@ -433,6 +433,13 @@ function AnalysisCard({
           <span className="h-1.5 w-1.5 rounded-full bg-success-500" />
           Ultimo salvataggio: {relativeTime(analysis.updated_at)}
         </div>
+        <button
+          onClick={(e) => { e.stopPropagation(); onOpen(); }}
+          className="flex items-center gap-1.5 rounded-xl bg-brand-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-brand-700 transition-colors"
+        >
+          Accedi
+          <ArrowRight className="h-3.5 w-3.5" />
+        </button>
       </div>
     </div>
   );

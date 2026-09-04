@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { Header } from '@/components/Header';
 import { WhatsAppButton } from '@/components/WhatsAppButton';
 import {
-  BarChart3, Sparkles,
+  BarChart3, Sparkles, Printer,
   Trophy, TrendingUp, TrendingDown, Minus, Loader2, School as SchoolIcon,
 } from 'lucide-react';
 import { Button } from '@/components/Button';
@@ -245,7 +245,11 @@ export function Dashboard({ analysisId, onBack, onOpenSettings }: DashboardProps
                         <p className="text-sm text-slate-600 mb-4">
                           Se vuoi approfondire, o se vuoi un ulteriore aiuto per chiarire qual'è la scelta che per te oggi è più utile, chiedi supporto al coach: clicca il bottone verde qui sotto.
                         </p>
-                        <div className="flex justify-center">
+                        <div className="flex flex-wrap justify-center gap-3">
+                          <Button variant="secondary" onClick={handlePrint}>
+                            <Printer className="h-4 w-4" />
+                            Stampa PDF
+                          </Button>
                           <WhatsAppButton />
                         </div>
                       </div>
