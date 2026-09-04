@@ -1,17 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
-import { WhatsAppButton } from '@/components/WhatsAppButton';
+import { Header } from '@/components/Header';
 import {
-  Plus, MoreVertical, Copy, Trash2, Pencil, FileText, LogOut, Search,
-  FolderOpen, AlertTriangle, X, Settings as SettingsIcon,
+  Plus, MoreVertical, Copy, Trash2, Pencil, FileText, Search,
+  FolderOpen, AlertTriangle, X,
 } from 'lucide-react';
-import { Logo } from '@/components/Logo';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 import { Modal } from '@/components/Modal';
-import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/lib/supabase';
 import type { Analysis } from '@/lib/types';
-import { formatDate, relativeTime, getInitials } from '@/lib/utils';
+import { formatDate, relativeTime } from '@/lib/utils';
 
 interface HomeProps {
   onOpenAnalysis: (id: string) => void;
@@ -19,7 +17,6 @@ interface HomeProps {
 }
 
 export function Home({ onOpenAnalysis, onOpenSettings }: HomeProps) {
-  const { user, signOut } = useAuth();
   const [analyses, setAnalyses] = useState<Analysis[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -62,11 +59,6 @@ export function Home({ onOpenAnalysis, onOpenSettings }: HomeProps) {
       return () => document.removeEventListener('click', handleClick);
     }
   }, [menuOpenId]);
-
-  const fullName = user
-    ? `${(user.user_metadata?.first_name as string) ?? ''} ${(user.user_metadata?.last_name as string) ?? ''}`.trim()
-    : '';
-  const displayEmail = user?.email ?? '';
 
   const filtered = analyses.filter((a) =>
     a.name.toLowerCase().includes(search.toLowerCase())
@@ -172,31 +164,7 @@ export function Home({ onOpenAnalysis, onOpenSettings }: HomeProps) {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/80 backdrop-blur-xl">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            <Logo size="sm" />
-            <div className="flex items-center gap-3">
-              <WhatsAppButton />
-              <Button variant="ghost" size="sm" onClick={onOpenSettings} title="Impostazioni">
-                <SettingsIcon className="h-4 w-4" />
-                <span className="hidden sm:inline">Impostazioni</span>
-              </Button>
-              <div className="hidden sm:flex flex-col items-end leading-tight">
-                <span className="text-sm font-medium text-slate-700">{fullName || 'Utente'}</span>
-                <span className="text-xs text-slate-400">{displayEmail}</span>
-              </div>
-              <div className="h-10 w-10 rounded-full bg-gradient-to-br from-brand-500 to-sky-400 flex items-center justify-center text-sm font-semibold text-white shadow-md">
-                {getInitials(fullName || displayEmail || 'U')}
-              </div>
-              <Button variant="ghost" size="sm" onClick={signOut} title="Esci">
-                <LogOut className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header page="home" onHome={() => {}} onOpenSettings={onOpenSettings} />
 
       {/* Main content */}
       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">

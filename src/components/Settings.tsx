@@ -1,16 +1,13 @@
 import { useState, useRef, type DragEvent } from 'react';
-import { WhatsAppButton } from '@/components/WhatsAppButton';
+import { Header } from '@/components/Header';
 import {
   Plus, GripVertical, Pencil, Trash2, ArrowLeft, AlertTriangle,
-  Check, X, Settings as SettingsIcon, Loader2,
+  Check, Settings as SettingsIcon, Loader2,
 } from 'lucide-react';
-import { Logo } from '@/components/Logo';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 import { Modal } from '@/components/Modal';
-import { useAuth } from '@/context/AuthContext';
 import { useParameters } from '@/context/ParametersContext';
-import { getInitials } from '@/lib/utils';
 import type { Parameter } from '@/lib/types';
 
 interface SettingsProps {
@@ -18,7 +15,6 @@ interface SettingsProps {
 }
 
 export function Settings({ onBack }: SettingsProps) {
-  const { user, signOut } = useAuth();
   const { parameters, loading, addParameter, updateParameter, deleteParameter, reorderParameters } = useParameters();
 
   const [addOpen, setAddOpen] = useState(false);
@@ -39,11 +35,6 @@ export function Settings({ onBack }: SettingsProps) {
   const [reordering, setReordering] = useState(false);
   const holdTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [dragEnabled, setDragEnabled] = useState(false);
-
-  const fullName = user
-    ? `${(user.user_metadata?.first_name as string) ?? ''} ${(user.user_metadata?.last_name as string) ?? ''}`.trim()
-    : '';
-  const displayEmail = user?.email ?? '';
 
   const displayParams = localOrder ?? parameters;
 
@@ -148,27 +139,7 @@ export function Settings({ onBack }: SettingsProps) {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/80 backdrop-blur-xl overflow-hidden">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            <Logo size="sm" />
-            <div className="flex items-center gap-3">
-              <WhatsAppButton />
-              <div className="hidden sm:flex flex-col items-end leading-tight">
-                <span className="text-sm font-medium text-slate-700">{fullName || 'Utente'}</span>
-                <span className="text-xs text-slate-400">{displayEmail}</span>
-              </div>
-              <div className="h-10 w-10 rounded-full bg-gradient-to-br from-brand-500 to-sky-400 flex items-center justify-center text-sm font-semibold text-white shadow-md">
-                {getInitials(fullName || displayEmail || 'U')}
-              </div>
-              <Button variant="ghost" size="sm" onClick={signOut} title="Esci">
-                <span className="hidden sm:inline">Esci</span>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header page="settings" onBack={onBack} onHome={onBack} onOpenSettings={() => {}} />
 
       {/* Main content */}
       <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8">

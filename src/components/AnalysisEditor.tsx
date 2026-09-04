@@ -1,19 +1,18 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { Header } from '@/components/Header';
 import { WhatsAppButton } from '@/components/WhatsAppButton';
 import {
-  ArrowLeft, Plus, Settings as SettingsIcon, LogOut, MoreVertical,
-  Pencil, Trash2, MapPin, School as SchoolIcon, AlertTriangle, X,
+  Plus, MoreVertical,
+  Pencil, Trash2, MapPin, School as SchoolIcon, AlertTriangle,
   Loader2, Table as TableIcon, BarChart3,
 } from 'lucide-react';
-import { Logo } from '@/components/Logo';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 import { Modal } from '@/components/Modal';
-import { useAuth } from '@/context/AuthContext';
 import { useParameters } from '@/context/ParametersContext';
 import { EvaluationMatrix } from '@/components/EvaluationMatrix';
 import { supabase } from '@/lib/supabase';
-import { getInitials, formatDate } from '@/lib/utils';
+import { formatDate } from '@/lib/utils';
 import type { Analysis, AnalysisData, School } from '@/lib/types';
 
 interface AnalysisEditorProps {
@@ -24,7 +23,6 @@ interface AnalysisEditorProps {
 }
 
 export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashboard }: AnalysisEditorProps) {
-  const { user, signOut } = useAuth();
   const { parameters } = useParameters();
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
   const [loading, setLoading] = useState(true);
@@ -45,11 +43,6 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
 
   const pendingDataRef = useRef<AnalysisData | null>(null);
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const fullName = user
-    ? `${(user.user_metadata?.first_name as string) ?? ''} ${(user.user_metadata?.last_name as string) ?? ''}`.trim()
-    : '';
-  const displayEmail = user?.email ?? '';
 
   const fetchAnalysis = useCallback(async () => {
     setLoading(true);
@@ -176,45 +169,13 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
 
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/80 backdrop-blur-xl overflow-hidden" >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            <div className="flex items-center gap-4">
-              <button
-                onClick={onBack}
-                className="rounded-lg p-1.5 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700"
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </button>
-              <button onClick={onBack} title="Torna alla Home">
-                <Logo size="sm" />
-              </button>
-            </div>
-            <div className="flex items-center gap-3">
-              <WhatsAppButton fullName={fullName} email={displayEmail} />
-              <Button variant="ghost" size="sm" onClick={onOpenDashboard} title="Dashboard">
-                <BarChart3 className="h-4 w-4" />
-                <span className="hidden sm:inline">Dashboard</span>
-              </Button>
-              <Button variant="ghost" size="sm" onClick={onOpenSettings} title="Impostazioni">
-                <SettingsIcon className="h-4 w-4" />
-                <span className="hidden sm:inline">Impostazioni</span>
-              </Button>
-              <div className="hidden sm:flex flex-col items-end leading-tight">
-                <span className="text-sm font-medium text-slate-700">{fullName || 'Utente'}</span>
-                <span className="text-xs text-slate-400">{displayEmail}</span>
-              </div>
-              <div className="h-10 w-10 rounded-full bg-gradient-to-br from-brand-500 to-sky-400 flex items-center justify-center text-sm font-semibold text-white shadow-md">
-                {getInitials(fullName || displayEmail || 'U')}
-              </div>
-              <Button variant="ghost" size="sm" onClick={signOut} title="Esci">
-                <LogOut className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header
+        page="editor"
+        onBack={onBack}
+        onHome={onBack}
+        onOpenSettings={onOpenSettings}
+        onOpenDashboard={onOpenDashboard}
+      />
 
       {/* Main content */}
       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
@@ -357,7 +318,7 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
                   <BarChart3 className="h-4 w-4" />
                   Vai alla Dashboard
                 </Button>
-                <WhatsAppButton fullName={fullName} email={displayEmail} />
+                <WhatsAppButton />
               </div>
             </div>
           </div>

@@ -1,17 +1,16 @@
 import { useState, useEffect, useMemo } from 'react';
+import { Header } from '@/components/Header';
 import { WhatsAppButton } from '@/components/WhatsAppButton';
 import {
-  ArrowLeft, Settings as SettingsIcon, LogOut, BarChart3, Sparkles,
-  Trophy, TrendingUp, TrendingDown, Minus, Loader2, School as SchoolIcon, Printer,
+  BarChart3, Sparkles,
+  Trophy, TrendingUp, TrendingDown, Minus, Loader2, School as SchoolIcon,
 } from 'lucide-react';
-import { Logo } from '@/components/Logo';
 import { Button } from '@/components/Button';
 import { useAuth } from '@/context/AuthContext';
 import { useParameters } from '@/context/ParametersContext';
 import { RadarChart } from '@/components/RadarChart';
 import { ParameterBarChart } from '@/components/ParameterBarChart';
 import { supabase } from '@/lib/supabase';
-import { getInitials } from '@/lib/utils';
 import { computeSchoolData, generateAIEvaluation } from '@/lib/ai-evaluation';
 import type { Analysis, AnalysisData, School } from '@/lib/types';
 
@@ -22,7 +21,7 @@ interface DashboardProps {
 }
 
 export function Dashboard({ analysisId, onBack, onOpenSettings }: DashboardProps) {
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
   const { parameters } = useParameters();
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
   const [loading, setLoading] = useState(true);
@@ -93,43 +92,13 @@ export function Dashboard({ analysisId, onBack, onOpenSettings }: DashboardProps
     <div className="min-h-screen bg-slate-50">
 
       {/* ===== SCHERMO ===== */}
-      <header className="no-print sticky top-0 z-30 border-b border-slate-200 bg-white/80 backdrop-blur-xl overflow-hidden">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            <div className="flex items-center gap-4">
-              <button onClick={onBack} className="rounded-lg p-1.5 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700">
-                <ArrowLeft className="h-5 w-5" />
-              </button>
-              <button onClick={onBack} title="Torna alla Home">
-                <Logo size="sm" />
-              </button>
-            </div>
-            <div className="flex items-center gap-3">
-              <WhatsAppButton fullName={fullName} email={displayEmail} />
-              {compA && compB && (
-                <Button variant="ghost" size="sm" onClick={handlePrint} title="Stampa / Salva PDF">
-                  <Printer className="h-4 w-4" />
-                  <span className="hidden sm:inline">Stampa PDF</span>
-                </Button>
-              )}
-              <Button variant="ghost" size="sm" onClick={onOpenSettings} title="Impostazioni">
-                <SettingsIcon className="h-4 w-4" />
-                <span className="hidden sm:inline">Impostazioni</span>
-              </Button>
-              <div className="hidden sm:flex flex-col items-end leading-tight">
-                <span className="text-sm font-medium text-slate-700">{fullName || 'Utente'}</span>
-                <span className="text-xs text-slate-400">{displayEmail}</span>
-              </div>
-              <div className="h-10 w-10 rounded-full bg-gradient-to-br from-brand-500 to-sky-400 flex items-center justify-center text-sm font-semibold text-white shadow-md">
-                {getInitials(fullName || displayEmail || 'U')}
-              </div>
-              <Button variant="ghost" size="sm" onClick={signOut} title="Esci">
-                <LogOut className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header
+        page="dashboard"
+        onBack={onBack}
+        onHome={onBack}
+        onOpenSettings={onOpenSettings}
+        onPrint={compA && compB ? handlePrint : undefined}
+      />
 
       <main className="no-print mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
@@ -277,7 +246,7 @@ export function Dashboard({ analysisId, onBack, onOpenSettings }: DashboardProps
                           Se vuoi approfondire, o se vuoi un ulteriore aiuto per chiarire qual'è la scelta che per te oggi è più utile, chiedi supporto al coach: clicca il bottone verde qui sotto.
                         </p>
                         <div className="flex justify-center">
-                          <WhatsAppButton fullName={fullName} email={displayEmail} />
+                          <WhatsAppButton />
                         </div>
                       </div>
                     </div>
