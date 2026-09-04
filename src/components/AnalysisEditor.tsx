@@ -330,10 +330,10 @@ export function AnalysisEditor({ analysisId, onBack, onOpenSettings, onOpenDashb
               <div>
                 <div className="flex items-center gap-2">
                   <TableIcon className="h-5 w-5 text-brand-600" />
-                  <h2 className="text-xl font-semibold text-slate-800">Matrice di Valutazione</h2>
+                  <h2 className="text-xl font-semibold text-slate-800">Matrice di Valutazione e Confronto (min. 2 scuola)</h2>
                 </div>
                 <p className="text-sm text-slate-500">
-                  Righe: parametri · Colonne: scuole · Voti da 1 a 10
+                  Inserisci la tua personale valutazione di ogni parametro inserendo un voto da 1 a 10 PPI (Personal Perceived Index). Se vuoi, puoi anche aggiungere delle note in ogni cella.
                 </p>
               </div>
             </div>
